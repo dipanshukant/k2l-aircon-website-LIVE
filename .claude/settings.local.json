@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(wc -l \"c:/Users/acer/Desktop/k2l-aircon-website-LIVE\"/*.html)",
+      "Bash(where node:*)",
+      "Bash(npx wrangler:*)",
+      "Bash(timeout 10 bash -c 'cat \"C:\\\\Users\\\\acer\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\c--Users-acer-Desktop-k2l-aircon-website-LIVE\\\\1a8f310a-59b8-4112-9c70-b232686f7df6\\\\tasks\\\\bkcnbuf09.output\" 2>/dev/null; sleep 8; cat \"C:\\\\Users\\\\acer\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\c--Users-acer-Desktop-k2l-aircon-website-LIVE\\\\1a8f310a-59b8-4112-9c70-b232686f7df6\\\\tasks\\\\bkcnbuf09.output\" 2>/dev/null')",
+      "Bash(ipconfig)",
+      "Bash(powershell -Command \"New-NetFirewallRule -DisplayName 'Wrangler Dev Server' -Direction Inbound -Protocol TCP -LocalPort 8080 -Action Allow\")"
+    ]
+  }
+}
