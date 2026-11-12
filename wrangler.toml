@@ -1,0 +1,14 @@
+name = "k2lcoolaircon"
+pages_build_output_dir = "dist"
+compatibility_date = "2026-11-01"
+
+# Blog posts
+[[d1_databases]]
+binding = "DB"
+database_name = "k2lcoolaircon-cms"
+database_id = "a734be90-de5d-4e55-9789-3c97eeeed3de"
+
+# Prices, uploaded photos, login throttling
+[[kv_namespaces]]
+binding = "KV"
+id = "00f6c9fec4634bae8939f07058ffeb6e"

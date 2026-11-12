@@ -1,0 +1,445 @@
+<!doctype html>
+<html lang="en-SG">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>K2L Website Admin</title>
+<link rel="icon" type="image/png" href="/assets/img/k2l-aircon-logo.png">
+<link rel="stylesheet" href="/assets/fonts/fonts.css">
+<style>
+:root{--desk:#1B1F5C;--paper:#F6D5DC;--ink:#23277A;--hand:#1B1B1F;--red:#C22B2B;--head:'Barlow Condensed','Arial Narrow',sans-serif;--body:'Courier Prime','Courier New',monospace}
+*{box-sizing:border-box}
+body{margin:0;background:var(--desk);color:var(--ink);font:16px/1.5 var(--body)}
+a{color:inherit}
+button,input,textarea,select{font:inherit;color:inherit}
+[hidden]{display:none!important}
+.wrap{max-width:1280px;margin:0 auto;padding:clamp(0px,3vw,32px)}
+.sheet{background:var(--paper);box-shadow:10px 12px 0 rgba(0,0,0,.28);padding:clamp(16px,3vw,36px);display:flex;flex-direction:column;gap:22px;min-height:60vh}
+.top{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;border-bottom:4px double var(--ink);padding-bottom:14px}
+.brand{font:700 clamp(26px,3.4vw,38px)/1 var(--head);text-transform:uppercase;letter-spacing:.02em}
+.brand small{display:block;font:500 26px/1 'Caveat',cursive;text-transform:none;color:var(--hand);letter-spacing:0;margin-top:4px}
+.tabs{display:flex;flex-wrap:wrap;gap:6px}
+.tab,.btn,.ghost{min-height:44px;padding:0 18px;border:2px solid var(--ink);background:transparent;cursor:pointer;font:700 19px/1 var(--head);letter-spacing:.08em;text-transform:uppercase;display:inline-flex;align-items:center;justify-content:center;gap:8px;text-decoration:none}
+.tab[aria-current=true],.btn{background:var(--ink);color:var(--paper)}
+.btn:disabled{opacity:.5;cursor:wait}
+.danger{border-color:var(--red);color:var(--red)}
+.danger.armed{background:var(--red);color:#fff}
+h1,h2{margin:0;font-family:var(--head);text-transform:uppercase}
+h1{font-size:clamp(32px,4vw,48px);line-height:1}
+h2{font-size:22px;letter-spacing:.08em}
+.hw{font:500 26px/1.1 'Caveat',cursive;color:var(--hand)}
+.box{border:2px solid var(--ink)}
+.bh{display:flex;border-bottom:2px solid var(--ink);font:700 20px/1.2 var(--head);letter-spacing:.1em;text-transform:uppercase}
+.bh b{background:var(--ink);color:var(--paper);padding:6px 14px}
+.bh span{padding:6px 14px}
+.row{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 16px;padding:12px 16px;border-bottom:1px dotted var(--ink)}
+.row:last-child{border-bottom:0}
+.row .t{flex:1 1 260px;font-weight:700}
+.row .meta{font-size:14px}
+.chip{display:inline-block;font:700 14px/1 var(--head);letter-spacing:.1em;text-transform:uppercase;padding:5px 8px;border:2px solid currentColor}
+.chip.live{color:#1d6b2c}.chip.draft{color:#7a5a00}.chip.soon{color:var(--ink)}
+.actions{display:flex;flex-wrap:wrap;gap:8px}
+.empty{padding:28px 16px;text-align:center}
+label.f{display:flex;flex-direction:column;gap:4px}
+.lb{font-size:13px;text-transform:uppercase;letter-spacing:.06em;font-weight:700}
+.help{font-size:13px;opacity:.85}
+input[type=text],input[type=password],input[type=date],input[type=number],textarea{width:100%;background:#fff6f8;border:2px solid var(--ink);padding:10px 12px;min-height:44px;border-radius:0}
+input:focus,textarea:focus{outline:3px solid #8f93d8;outline-offset:1px}
+textarea{resize:vertical}
+#body{min-height:420px;font-size:15px;line-height:1.6}
+.slug{display:flex;align-items:stretch}
+.slug span{display:flex;align-items:center;padding:0 8px;border:2px solid var(--ink);border-right:0;font-size:14px;white-space:nowrap;background:var(--paper)}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(220px,100%),1fr));gap:14px}
+.editor{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:24px;align-items:start}
+.form{display:flex;flex-direction:column;gap:16px}
+.toolbar{display:flex;flex-wrap:wrap;gap:4px;border:2px solid var(--ink);border-bottom:0;padding:6px;background:#fbe4e9}
+.toolbar button{min-height:36px;padding:0 10px;border:1px solid var(--ink);background:var(--paper);cursor:pointer;font:700 15px/1 var(--head);letter-spacing:.06em;text-transform:uppercase}
+.cover{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.cover img{width:160px;height:auto;background:#fff;padding:6px;box-shadow:3px 4px 0 rgba(35,39,122,.25)}
+.bar{position:sticky;bottom:0;background:var(--paper);border-top:2px solid var(--ink);padding:12px 0 4px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;z-index:5}
+.bar .grow{flex:1}
+.pv{position:sticky;top:16px;max-height:calc(100vh - 32px);overflow:auto;border:2px dashed var(--ink);background:var(--paper);padding:16px}
+.pv-label{font:700 14px/1 var(--head);letter-spacing:.12em;text-transform:uppercase;margin-bottom:12px;opacity:.7}
+/* Copy of the site's blog styles for the live preview */
+.pv .post{display:flex;flex-direction:column;gap:22px;font-size:16px}
+.pv .ttl{margin:0;font:700 clamp(30px,3.4vw,46px)/.95 var(--head);text-transform:uppercase}
+.pv .bx{border:2px solid var(--ink);display:flex;flex-direction:column}
+.pv .sec+.sec{border-top:2px solid var(--ink)}
+.pv .bh{margin:0}
+.pv .pad{padding:16px;display:flex;flex-direction:column;gap:14px}
+.pv .pad h3{margin:6px 0 0;font:700 20px/1.2 var(--head);letter-spacing:.06em;text-transform:uppercase}
+.pv .pad ul,.pv .pad ol{margin:0;padding-left:1.4em}
+.pv p{margin:0}
+.pv .ph{background:#fff;padding:8px 8px 12px;box-shadow:4px 5px 0 rgba(35,39,122,.25);max-width:100%}
+.pv .ph img{display:block;width:100%;height:auto}
+.pv .btn{align-self:flex-start;pointer-events:none}
+.login{max-width:420px;margin:8vh auto;display:flex;flex-direction:column;gap:16px}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--ink);color:var(--paper);padding:12px 20px;font-weight:700;box-shadow:4px 5px 0 rgba(0,0,0,.3);z-index:50;max-width:calc(100vw - 32px)}
+.toast.err{background:var(--red);color:#fff}
+.price{display:grid;grid-template-columns:minmax(0,1fr) 230px;gap:8px 16px;align-items:center;padding:12px 16px;border-bottom:1px dotted var(--ink)}
+.price:last-child{border-bottom:0}
+.money{display:flex;align-items:center;gap:6px;font-weight:700;white-space:nowrap}
+.money input{text-align:right;font-weight:700;flex:1 1 auto;min-width:0;width:auto}
+@media (max-width:900px){.editor{grid-template-columns:1fr}.pv{position:static;max-height:none}}
+@media (max-width:520px){.price{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap"><div class="sheet">
+
+<!-- LOGIN -->
+<section id="v-login" class="login" hidden>
+  <div class="brand">K2L Website<small>your control room</small></div>
+  <form id="login-form" class="form">
+    <label class="f"><span class="lb">Password</span><input type="password" id="pw" autocomplete="current-password" required></label>
+    <button class="btn" type="submit">Log in</button>
+    <p class="help" id="login-msg"></p>
+  </form>
+</section>
+
+<!-- APP -->
+<div id="v-app" hidden style="display:flex;flex-direction:column;gap:22px">
+  <header class="top">
+    <div class="brand">K2L Website<small>your control room</small></div>
+    <nav class="tabs">
+      <button class="tab" data-tab="posts">Blog posts</button>
+      <button class="tab" data-tab="prices">Prices</button>
+      <a class="tab" href="/" target="_blank" rel="noopener">View website</a>
+      <button class="tab" id="logout">Log out</button>
+    </nav>
+  </header>
+
+  <!-- POST LIST -->
+  <section id="v-posts" hidden style="display:flex;flex-direction:column;gap:18px">
+    <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:end;gap:12px">
+      <div><h1>Blog posts</h1><div class="hw">write it, tick publish, done</div></div>
+      <button class="btn" id="new-post">+ New post</button>
+    </div>
+    <div class="box"><div class="bh"><b>1</b><span>All posts</span></div><div id="post-list"></div></div>
+  </section>
+
+  <!-- EDITOR -->
+  <section id="v-edit" hidden>
+    <div class="editor">
+      <form id="post-form" class="form" autocomplete="off">
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+          <button type="button" class="ghost" id="back">&larr; All posts</button>
+          <span id="status-chip"></span>
+        </div>
+        <label class="f"><span class="lb">Title</span><input type="text" id="title" maxlength="150" placeholder="How often should you service your aircon?" required></label>
+        <label class="f"><span class="lb">Web address</span>
+          <div class="slug"><span>/blog/</span><input type="text" id="slug" maxlength="100" placeholder="how-often-to-service-aircon"></div>
+          <span class="help">Filled in from the title. Avoid changing it after publishing, old links would break.</span></label>
+        <div class="grid2">
+          <label class="f"><span class="lb">Date</span><input type="date" id="date"><span class="help">Future date = goes live on that day.</span></label>
+          <label class="f"><span class="lb">Handwritten note (optional)</span><input type="text" id="note" maxlength="80" placeholder="twice a year, usually"><span class="help">Short answer in handwriting, under the title.</span></label>
+        </div>
+        <label class="f"><span class="lb">Summary for Google <span id="sum-count"></span></span><textarea id="summary" rows="3" maxlength="300" placeholder="One or two sentences. Shows on Google and on the blog list."></textarea><span class="help">Best length: 140 to 160 characters.</span></label>
+        <div class="f" style="display:flex;flex-direction:column;gap:6px">
+          <span class="lb">Cover photo (optional)</span>
+          <div class="cover">
+            <img id="cover-img" alt="" hidden>
+            <button type="button" class="ghost" id="cover-btn">Upload photo</button>
+            <button type="button" class="ghost danger" id="cover-del" hidden>Remove</button>
+          </div>
+          <input type="text" id="cover-alt" maxlength="200" placeholder="Describe the photo, e.g. technician cleaning a wall aircon in an HDB flat">
+        </div>
+        <div class="f" style="display:flex;flex-direction:column">
+          <span class="lb" style="margin-bottom:4px">Article</span>
+          <div class="toolbar">
+            <button type="button" data-ins="section" title="Starts a new numbered box">+ Section</button>
+            <button type="button" data-ins="sub">Subheading</button>
+            <button type="button" data-ins="bold">Bold</button>
+            <button type="button" data-ins="link">Link</button>
+            <button type="button" data-ins="list">List</button>
+            <button type="button" data-ins="note">Handwritten</button>
+            <button type="button" data-ins="photo">Photo</button>
+          </div>
+          <textarea id="body" placeholder="## What a service covers&#10;&#10;Write normally here. Each '## heading' becomes a numbered box on the page.&#10;&#10;- bullet point&#10;- another one&#10;&#10;**bold words** and [a link](/aircon-servicing)"></textarea>
+          <span class="help">Each "## Heading" makes a new numbered box. A "Need help?" box with the WhatsApp button is added at the end automatically.</span>
+        </div>
+        <div class="bar">
+          <button type="button" class="btn" id="save-pub">Publish</button>
+          <button type="button" class="ghost" id="save-draft">Save draft</button>
+          <a class="ghost" id="view-live" target="_blank" rel="noopener" hidden>Open page</a>
+          <span class="grow"></span>
+          <button type="button" class="ghost danger" id="delete" hidden>Delete</button>
+        </div>
+      </form>
+      <aside class="pv" aria-label="Preview"><div class="pv-label">Live preview</div><div id="preview"></div></aside>
+    </div>
+  </section>
+
+  <!-- PRICES -->
+  <section id="v-prices" hidden style="display:flex;flex-direction:column;gap:18px;max-width:760px">
+    <div><h1>Prices</h1><div class="hw">change once, updates everywhere</div></div>
+    <p class="help" style="font-size:15px;margin:0">These "from" prices show on the homepage, price list and service pages, in English and Chinese. Changes appear on the website within about a minute.</p>
+    <form id="price-form" class="box">
+      <div class="bh"><b>$</b><span>Starting prices</span></div>
+      <div id="price-rows"></div>
+    </form>
+    <div><button class="btn" id="save-prices">Save prices</button></div>
+  </section>
+</div>
+
+</div></div>
+<input type="file" id="file" accept="image/jpeg,image/png,image/webp" hidden>
+<div id="toast" class="toast" role="status" hidden></div>
+
+<script>
+(() => {
+  const $ = (s) => document.querySelector(s);
+  const api = async (path, opts = {}) => {
+    const res = await fetch('/api/admin/' + path, {
+      credentials: 'same-origin',
+      ...opts,
+      headers: { 'x-k2l-admin': '1', ...(opts.body && !(opts.body instanceof Blob) ? { 'content-type': 'application/json' } : {}), ...(opts.headers || {}) },
+      body: opts.body && !(opts.body instanceof Blob) ? JSON.stringify(opts.body) : opts.body,
+    });
+    const data = await res.json().catch(() => ({}));
+    if (res.status === 401 && path !== 'login') { showLogin(); throw new Error(data.error || 'Please log in again.'); }
+    if (!res.ok) throw new Error(data.error || 'Something went wrong.');
+    return data;
+  };
+  let toastT;
+  const toast = (msg, err) => { const t = $('#toast'); t.textContent = msg; t.className = 'toast' + (err ? ' err' : ''); t.hidden = false; clearTimeout(toastT); toastT = setTimeout(() => (t.hidden = true), err ? 6000 : 3000); };
+  const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const pretty = (d) => { const [y, m, dd] = String(d).split('-').map(Number); return y ? `${dd} ${MONTHS[m - 1]} ${y}` : ''; };
+  const slugify = (s) => s.toLowerCase().normalize('NFKD').replace(/[^\w\s-]/g, '').replace(/[\s_]+/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '').slice(0, 80);
+  const today = () => new Date(Date.now() + 8 * 3600e3).toISOString().slice(0, 10);
+
+  // ---------- views ----------
+  const views = ['posts', 'edit', 'prices'];
+  function show(view) {
+    $('#v-login').hidden = true; $('#v-app').hidden = false;
+    views.forEach((v) => ($('#v-' + v).hidden = v !== view));
+    document.querySelectorAll('.tab[data-tab]').forEach((b) => b.setAttribute('aria-current', String(b.dataset.tab === view || (view === 'edit' && b.dataset.tab === 'posts'))));
+    window.scrollTo(0, 0);
+  }
+  function showLogin(msg) { $('#v-app').hidden = true; $('#v-login').hidden = false; $('#login-msg').textContent = msg || ''; $('#pw').focus(); }
+
+  $('#login-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    try { await api('login', { method: 'POST', body: { password: $('#pw').value } }); $('#pw').value = ''; route(); }
+    catch (err) { $('#login-msg').textContent = err.message; }
+  });
+  $('#logout').addEventListener('click', async () => { await api('logout', { method: 'POST' }).catch(() => {}); showLogin('Logged out.'); });
+  document.querySelectorAll('.tab[data-tab]').forEach((b) => b.addEventListener('click', () => go('#/' + b.dataset.tab)));
+
+  // ---------- routing (#/posts, #/edit/5, #/new, #/prices) ----------
+  let dirty = false;
+  function go(hash) {
+    if (dirty && !confirmLeave()) return;
+    location.hash = hash;
+  }
+  let leaveArmed = 0;
+  function confirmLeave() {
+    if (Date.now() - leaveArmed < 4000) { dirty = false; return true; }
+    leaveArmed = Date.now(); toast('You have unsaved changes. Click again to leave without saving.', true); return false;
+  }
+  window.addEventListener('beforeunload', (e) => { if (dirty) { e.preventDefault(); e.returnValue = ''; } });
+  window.addEventListener('hashchange', route);
+
+  async function route() {
+    const h = location.hash || '#/posts';
+    try {
+      const me = await api('me');
+      if (!me.configured) return showLogin('Admin is not set up yet. Ask your developer to set the password.');
+      if (!me.authed) return showLogin();
+    } catch { return showLogin('Cannot reach the server. Check your internet.'); }
+    let m;
+    if (h === '#/prices') return loadPrices();
+    if (h === '#/new') return openEditor(null);
+    if ((m = h.match(/^#\/edit\/(\d+)$/))) return openEditor(Number(m[1]));
+    return loadPosts();
+  }
+
+  // ---------- posts list ----------
+  async function loadPosts() {
+    show('posts');
+    const list = $('#post-list');
+    list.innerHTML = '<div class="empty">Loading...</div>';
+    try {
+      const { posts, today } = await api('posts');
+      if (!posts.length) { list.innerHTML = '<div class="empty"><div class="hw">no posts yet</div><p>Click <strong>+ New post</strong> to write the first one.</p></div>'; return; }
+      list.innerHTML = posts.map((p) => {
+        const state = p.status === 'draft' ? ['draft', 'Draft'] : p.published_at > today ? ['soon', 'Scheduled'] : ['live', 'Live'];
+        return `<div class="row"><div class="t">${esc(p.title)}<div class="meta">${pretty(p.published_at)} &middot; /blog/${esc(p.slug)}</div></div>
+          <span class="chip ${state[0]}">${state[1]}</span>
+          <div class="actions"><a class="btn" href="#/edit/${p.id}">Edit</a><a class="ghost" href="/blog/${esc(p.slug)}" target="_blank" rel="noopener">View</a></div></div>`;
+      }).join('');
+    } catch (err) { list.innerHTML = `<div class="empty">${esc(err.message)}</div>`; }
+  }
+  $('#new-post').addEventListener('click', () => go('#/new'));
+  $('#back').addEventListener('click', () => go('#/posts'));
+
+  // ---------- editor ----------
+  let current = null; // saved post or null
+  let slugTouched = false;
+  const F = ['title', 'slug', 'date', 'note', 'summary', 'cover-alt', 'body'];
+
+  async function openEditor(id) {
+    show('edit');
+    current = null; slugTouched = false; dirty = false;
+    F.forEach((f) => ($('#' + f).value = ''));
+    setCover('');
+    $('#date').value = today();
+    if (id) {
+      try {
+        const { post } = await api('posts/' + id);
+        current = post; slugTouched = true;
+        $('#title').value = post.title; $('#slug').value = post.slug; $('#date').value = post.published_at;
+        $('#note').value = post.note; $('#summary').value = post.summary; $('#cover-alt').value = post.cover_alt; $('#body').value = post.body;
+        setCover(post.cover);
+      } catch (err) { toast(err.message, true); return go('#/posts'); }
+    }
+    refreshEditorState(); updatePreview(); updateCount();
+    if (!id) $('#title').focus();
+  }
+
+  function refreshEditorState() {
+    const live = current && current.status === 'published';
+    $('#save-pub').textContent = live ? 'Update live post' : 'Publish';
+    $('#save-draft').textContent = live ? 'Unpublish' : 'Save draft';
+    $('#delete').hidden = !current;
+    $('#view-live').hidden = !current;
+    if (current) $('#view-live').href = '/blog/' + current.slug;
+    $('#view-live').textContent = live ? 'Open page' : 'Open preview';
+    $('#status-chip').innerHTML = !current ? '<span class="chip draft">New, not saved</span>'
+      : live ? (current.published_at > today() ? '<span class="chip soon">Scheduled</span>' : '<span class="chip live">Live on website</span>')
+      : '<span class="chip draft">Draft, not public</span>';
+    resetDelete();
+  }
+
+  $('#title').addEventListener('input', () => { if (!slugTouched) $('#slug').value = slugify($('#title').value); });
+  $('#slug').addEventListener('input', () => { slugTouched = true; });
+  $('#slug').addEventListener('blur', () => { $('#slug').value = slugify($('#slug').value); });
+  $('#summary').addEventListener('input', updateCount);
+  function updateCount() { const n = $('#summary').value.length; $('#sum-count').textContent = `(${n})`; }
+  $('#post-form').addEventListener('input', () => { dirty = true; schedulePreview(); });
+
+  function formData(status) {
+    return {
+      title: $('#title').value, slug: slugify($('#slug').value || $('#title').value), published_at: $('#date').value || today(),
+      note: $('#note').value, summary: $('#summary').value, cover: $('#cover-img').dataset.url || '', cover_alt: $('#cover-alt').value,
+      body: $('#body').value, status,
+    };
+  }
+
+  async function save(status, btn) {
+    btn.disabled = true;
+    try {
+      const body = formData(status);
+      const { post } = current ? await api('posts/' + current.id, { method: 'PUT', body }) : await api('posts', { method: 'POST', body });
+      const was = current && current.status;
+      current = post; dirty = false; $('#slug').value = post.slug; slugTouched = true;
+      if (location.hash !== '#/edit/' + post.id) history.replaceState(null, '', '#/edit/' + post.id);
+      refreshEditorState();
+      toast(status === 'published' ? (was === 'published' ? 'Saved. The live page is updated.' : (post.published_at > today() ? 'Scheduled. It goes live on ' + pretty(post.published_at) + '.' : 'Published! It is live on the website now.'))
+        : was === 'published' ? 'Unpublished. It is hidden from the website.' : 'Draft saved. Not public yet.');
+    } catch (err) { toast(err.message, true); }
+    finally { btn.disabled = false; }
+  }
+  $('#save-pub').addEventListener('click', (e) => save('published', e.currentTarget));
+  $('#save-draft').addEventListener('click', (e) => save('draft', e.currentTarget));
+
+  let delArmed = false;
+  function resetDelete() { delArmed = false; $('#delete').classList.remove('armed'); $('#delete').textContent = 'Delete'; }
+  $('#delete').addEventListener('click', async () => {
+    if (!delArmed) { delArmed = true; $('#delete').classList.add('armed'); $('#delete').textContent = 'Click again to delete forever'; setTimeout(resetDelete, 5000); return; }
+    try { await api('posts/' + current.id, { method: 'DELETE' }); dirty = false; toast('Post deleted.'); go('#/posts'); }
+    catch (err) { toast(err.message, true); }
+  });
+
+  // ---------- toolbar ----------
+  function insert(before, after = '', placeholder = '') {
+    const ta = $('#body'); const s = ta.selectionStart; const e = ta.selectionEnd;
+    const sel = ta.value.slice(s, e) || placeholder;
+    ta.setRangeText(before + sel + after, s, e, 'end');
+    if (!ta.value.slice(s, e)) { ta.selectionStart = s + before.length; ta.selectionEnd = s + before.length + sel.length; }
+    ta.focus(); dirty = true; schedulePreview();
+  }
+  function lineStart(prefix, placeholder) {
+    const ta = $('#body'); const s = ta.selectionStart; const nl = s > 0 && ta.value[s - 1] !== '\n' ? '\n\n' : '';
+    insert(nl + prefix, '\n', placeholder);
+  }
+  document.querySelectorAll('[data-ins]').forEach((b) => b.addEventListener('click', () => {
+    const k = b.dataset.ins;
+    if (k === 'section') lineStart('## ', 'Section title');
+    if (k === 'sub') lineStart('### ', 'Subheading');
+    if (k === 'bold') insert('**', '**', 'bold words');
+    if (k === 'list') lineStart('- ', 'List item');
+    if (k === 'note') lineStart('> ', 'short note in lowercase');
+    if (k === 'link') {
+      const ta = $('#body'); const text = ta.value.slice(ta.selectionStart, ta.selectionEnd) || 'link text';
+      const url = window.prompt ? window.prompt('Paste the link, e.g. /aircon-repair or https://www.nea.gov.sg', '/') : '/';
+      if (url) insert('[', `](${url.trim()})`, text);
+    }
+    if (k === 'photo') pickImage((url) => lineStart(`![`, `](${url})`, 'describe the photo'));
+  }));
+
+  // ---------- images ----------
+  let onPicked = null;
+  function pickImage(cb) { onPicked = cb; $('#file').value = ''; $('#file').click(); }
+  $('#file').addEventListener('change', async () => {
+    const file = $('#file').files[0]; if (!file || !onPicked) return;
+    toast('Uploading photo...');
+    try {
+      const blob = await shrink(file);
+      const { url } = await api('upload', { method: 'POST', body: blob, headers: { 'content-type': blob.type } });
+      onPicked(url); toast('Photo uploaded.');
+    } catch (err) { toast(err.message || 'Upload failed.', true); }
+  });
+  // Resize to max 1400px wide and compress, so pages stay fast.
+  async function shrink(file) {
+    const img = new Image(); const src = URL.createObjectURL(file);
+    try {
+      await new Promise((ok, bad) => { img.onload = ok; img.onerror = () => bad(new Error('That file is not a photo we can read.')); img.src = src; });
+      const scale = Math.min(1, 1400 / img.naturalWidth);
+      if (scale === 1 && file.size < 600 * 1024) return file;
+      const c = document.createElement('canvas'); c.width = Math.round(img.naturalWidth * scale); c.height = Math.round(img.naturalHeight * scale);
+      const ctx = c.getContext('2d'); ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, c.width, c.height); ctx.drawImage(img, 0, 0, c.width, c.height);
+      return await new Promise((ok) => c.toBlob(ok, 'image/jpeg', 0.84));
+    } finally { URL.revokeObjectURL(src); }
+  }
+  function setCover(url) {
+    const img = $('#cover-img');
+    img.dataset.url = url || ''; img.hidden = !url; if (url) img.src = url; else img.removeAttribute('src');
+    $('#cover-del').hidden = !url; $('#cover-btn').textContent = url ? 'Change photo' : 'Upload photo';
+  }
+  $('#cover-btn').addEventListener('click', () => pickImage((url) => { setCover(url); dirty = true; schedulePreview(); }));
+  $('#cover-del').addEventListener('click', () => { setCover(''); dirty = true; schedulePreview(); });
+
+  // ---------- preview ----------
+  let pvT;
+  function schedulePreview() { clearTimeout(pvT); pvT = setTimeout(updatePreview, 450); }
+  async function updatePreview() {
+    try { const { html } = await api('preview', { method: 'POST', body: formData('draft') }); $('#preview').innerHTML = html; }
+    catch {}
+  }
+
+  // ---------- prices ----------
+  async function loadPrices() {
+    show('prices');
+    const box = $('#price-rows'); box.innerHTML = '<div class="empty">Loading...</div>';
+    try {
+      const { prices, fields } = await api('prices');
+      box.innerHTML = fields.map((f) => `<label class="price"><span><strong>${esc(f.label)}</strong></span>
+        <span class="money">from $<input type="number" min="1" step="1" inputmode="numeric" name="${f.key}" value="${prices[f.key]}" required>${f.unit ? `<span style="white-space:nowrap;font-weight:400">${esc(f.unit)}</span>` : ''}</span></label>`).join('');
+    } catch (err) { box.innerHTML = `<div class="empty">${esc(err.message)}</div>`; }
+  }
+  $('#save-prices').addEventListener('click', async (e) => {
+    const btn = e.currentTarget; btn.disabled = true;
+    const body = {}; document.querySelectorAll('#price-rows input').forEach((i) => (body[i.name] = i.value));
+    try { await api('prices', { method: 'PUT', body }); toast('Prices saved. The website updates within a minute.'); }
+    catch (err) { toast(err.message, true); }
+    finally { btn.disabled = false; }
+  });
+
+  route();
+})();
+</script>
+</body>
+</html>

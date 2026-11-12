@@ -16,7 +16,30 @@
       "Bash(git commit *)",
       "Bash(git push *)",
       "WebFetch(domain:developers.cloudflare.com)",
-      "Bash(git commit -q -m 'Point canonical, sitemap and structured data to k2lcoolaircon.com *)"
+      "Bash(git commit -q -m 'Point canonical, sitemap and structured data to k2lcoolaircon.com *)",
+      "Bash(grep -vE '^\\\\s*$')",
+      "Bash(grep -vE '^\\\\s*$|──|wrangler 4')",
+      "Bash(curl -s https://www.k2lairconsg.com/sitemap.xml)",
+      "Bash(sed 's/<loc>https:\\\\/\\\\/www.k2lairconsg.com//')",
+      "Read(//tmp/**)",
+      "Bash(sed 's#<loc>https://k2lcoolaircon.com##')",
+      "PowerShell(foreach \\($h in 'k2lcoolaircon.com','www.k2lcoolaircon.com'\\) { \"== $h\"; try { Resolve-DnsName $h -Server bethany.ns.cloudflare.com -DnsOnly -ErrorAction Stop | Select-Object Name,Type,IPAddress,NameHost | Format-Table -AutoSize | Out-String } catch { \"  \" + $_.Exception.Message } })",
+      "PowerShell(ipconfig /flushdns; Clear-DnsClientCache; try { Resolve-DnsName k2lcoolaircon.com -Type A -ErrorAction Stop | Select-Object Name,IPAddress | Format-Table -AutoSize | Out-String } catch { \"local resolver still: \" + $_.Exception.Message }; \\(Get-DnsClientServerAddress -AddressFamily IPv4 | Where-Object ServerAddresses | Select-Object -First 3 InterfaceAlias,ServerAddresses | Format-Table -AutoSize | Out-String\\))",
+      "PowerShell(Resolve-DnsName k2lcoolaircon.com -Type A -DnsOnly)",
+      "PowerShell(Resolve-DnsName www.k2lcoolaircon.com -Type A -DnsOnly)",
+      "Bash(node cms/tag-prices.mjs)",
+      "Bash(printf 'User-agent: *\\\\nAllow: /\\\\nDisallow: /admin\\\\nDisallow: /api/\\\\n\\\\nSitemap: https://k2lcoolaircon.com/sitemap.xml\\\\n')",
+      "Bash(printf 'dist/\\\\n.dev.vars\\\\n')",
+      "Bash(node build.mjs)",
+      "Bash(break)",
+      "Bash(grep -vE '^\\\\s*$' \"C:/Users/acer/AppData/Local/Temp/claude/bb898b5107e68686/ced72214-0c21-4b55-b004-01ca2de14bdb/tasks/b7c9gynip.output\")",
+      "PowerShell(\"router 192.168.1.1:\"; try { Resolve-DnsName k2lcoolaircon.com -Type A -Server 192.168.1.1 -DnsOnly -ErrorAction Stop | Format-Table Name,Type,IPAddress -AutoSize | Out-String } catch { $_.Exception.Message }; \"windows cache:\"; Get-DnsClientCache -Entry k2lcoolaircon.com -ErrorAction SilentlyContinue | Format-Table Entry,Status,TimeToLive -AutoSize | Out-String)",
+      "PowerShell(Get-NetTCPConnection -LocalPort 8788 -State Listen -ErrorAction SilentlyContinue | ForEach-Object { $p = Get-CimInstance Win32_Process -Filter \"ProcessId=$\\($_.OwningProcess\\)\"; \"{0} {1} pid={2} {3}\" -f $_.LocalAddress, $_.LocalPort, $_.OwningProcess, \\($p.CommandLine -replace '\\\\s+',' '\\).Substring\\(0,[Math]::Min\\(160,$p.CommandLine.Length\\)\\) })",
+      "PowerShell(Get-CimInstance Win32_Process | Where-Object { $_.Name -eq 'workerd.exe' -or \\($_.Name -eq 'node.exe' -and $_.CommandLine -match 'wrangler'\\) } | ForEach-Object { \"kill $\\($_.ProcessId\\) $\\($_.Name\\)\"; Stop-Process -Id $_.ProcessId -Force -ErrorAction SilentlyContinue })",
+      "Bash(awk '/<footer/,/<\\\\/footer>/' zh/about.html)",
+      "Bash(awk '$1!=1')",
+      "Bash(sed -i 's#\\\\.ttl{margin:0;font:700 clamp\\(40px,6vw,76px\\)/\\\\.95 #.ttl{margin:0;font:700 clamp\\(36px,4.6vw,56px\\)/.95 #' *.html)",
+      "Bash(sed -i 's#\\\\.ttl{margin:0;font:700 clamp\\(36px,5\\\\.5vw,68px\\)/1 #.ttl{margin:0;font:700 clamp\\(32px,4.4vw,52px\\)/1.1 #' zh/*.html)"
     ]
   }
 }

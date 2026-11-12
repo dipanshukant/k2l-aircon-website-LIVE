@@ -27,7 +27,7 @@ a{color:inherit}a:hover{color:inherit;opacity:.75}
 .sheet{max-width:1060px;margin:0 auto;background:#F6D5DC;box-shadow:10px 12px 0 rgba(0,0,0,.28)}
 .perf{height:40px}
 .in{padding:0 clamp(20px,4vw,48px) clamp(20px,4vw,48px);display:flex;flex-direction:column;gap:28px}
-.ttl{margin:0;font:700 clamp(40px,6vw,76px)/.95 'Barlow Condensed','Arial Narrow',sans-serif;text-transform:uppercase;text-wrap:balance}
+.ttl{margin:0;font:700 clamp(36px,4.6vw,56px)/.95 'Barlow Condensed','Arial Narrow',sans-serif;text-transform:uppercase;text-wrap:balance}
 .bx{border:2px solid #23277A;display:flex;flex-direction:column}
 .sec{display:flex;flex-direction:column}
 .sec+.sec{border-top:2px solid #23277A}
@@ -66,7 +66,7 @@ h3{margin:0;font-size:18px}p{margin:0}ol{margin:0;padding-left:28px;display:flex
 <div style="display: flex; flex-wrap: wrap; gap: 24px 48px; align-items: center">
 <div style="flex: 999 1 460px; min-width: 0; display: flex; flex-direction: column; gap: 16px; align-items: flex-start">
 <div class="lb">Aircon and AC service, Singapore</div>
-<h1 class="ttl">Overdue for a service? From $50 a unit.</h1>
+<h1 class="ttl">Overdue for a service? From $<span data-price="servicing">50</span> a unit.</h1>
 <div class="hw">clean aircon, lower PUB bill</div>
 <p style="max-width: 44em">Regular servicing keeps your aircon cold, saves electricity and makes the unit last longer. HDB, condo, landed, office, we cover them all.</p>
 <a class="btn" href="https://wa.me/6587127012?text=Hi%20K2L%2C%20I%20want%20to%20book%20aircon%20servicing.">WhatsApp to book</a>
@@ -87,9 +87,9 @@ h3{margin:0;font-size:18px}p{margin:0}ol{margin:0;padding-left:28px;display:flex
 <section class="sec">
 <h2 class="bh"><b>2</b><span>How much?</span></h2>
 <div class="pad" style="gap: 0">
-<div class="ln"><span><strong>General servicing,</strong> routine cleaning</span><span class="pr">from $50 a unit</span></div>
-<div class="ln"><span><strong>Gas top-up,</strong> R410, R22 or R32, leak check included</span><span class="pr">from $80 a unit</span></div>
-<div class="ln"><span><strong>Chemical overhaul,</strong> full deep clean</span><span class="pr">from $120 a unit</span></div>
+<div class="ln"><span><strong>General servicing,</strong> routine cleaning</span><span class="pr">from $<span data-price="servicing">50</span> a unit</span></div>
+<div class="ln"><span><strong>Gas top-up,</strong> R410, R22 or R32, leak check included</span><span class="pr">from $<span data-price="gas">80</span> a unit</span></div>
+<div class="ln"><span><strong>Chemical overhaul,</strong> full deep clean</span><span class="pr">from $<span data-price="chemical">120</span> a unit</span></div>
 <p style="padding-top: 14px">We tell you the price first. No hidden charges.</p>
 </div>
 </section>

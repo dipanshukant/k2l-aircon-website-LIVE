@@ -24,6 +24,7 @@
 body{margin:0}
 a{color:inherit}a:hover{color:inherit;opacity:.75}
 input[type=checkbox]{accent-color:#23277A;width:24px;height:24px;margin:0;flex:0 0 auto}
+@media (max-width:767px){.hero{flex-direction:column;align-items:stretch!important}.hero-main{display:contents!important}.hero-side{order:1;flex:none!important}.hero-svc{order:2}}
 </style>
 <script type="application/ld+json">[{"@context": "https://schema.org", "@type": "HVACBusiness", "@id": "https://k2lcoolaircon.com/#business", "name": "K2L Aircon", "legalName": "K2L Engineering Pte. Ltd.", "url": "https://k2lcoolaircon.com/", "logo": "https://k2lcoolaircon.com/assets/img/k2l-aircon-logo.png", "image": "https://k2lcoolaircon.com/assets/img/k2l-aircon-van.jpg", "telephone": "+6587127012", "email": "k2l.aircon.service@gmail.com", "priceRange": "$$", "address": {"@type": "PostalAddress", "streetAddress": "3018 Bedok North Street 5", "postalCode": "486132", "addressLocality": "Singapore", "addressCountry": "SG"}, "areaServed": {"@type": "Country", "name": "Singapore"}, "description": "新加坡二手冷气销售、冷气维修、保养、化学清洗及全新冷气安装。"}]</script>
 </head>
@@ -52,20 +53,20 @@ input[type=checkbox]{accent-color:#23277A;width:24px;height:24px;margin:0;flex:0
 </nav>
 
 <!-- INTRO -->
-<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 20px 48px; border-top: 4px double #23277A; padding-top: 28px">
-<div style="flex: 999 1 480px; min-width: 0; display: flex; flex-direction: column; gap: 18px">
+<div class="hero" style="display: flex; flex-wrap: wrap; align-items: center; gap: 20px 48px; border-top: 4px double #23277A; padding-top: 28px">
+<div class="hero-main" style="flex: 999 1 480px; min-width: 0; display: flex; flex-direction: column; gap: 18px">
 <div style="font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase">冷气销售、维修与保养，新加坡</div>
-<h1 style="margin: 0; font-family: 'Barlow Condensed', 'Arial Narrow', 'Microsoft YaHei', 'PingFang SC', sans-serif; font-weight: 700; font-size: clamp(32px, 4.4vw, 52px); line-height: 1.1; text-wrap: balance">二手冷气$700起，包安装。维修保养也做。</h1>
-<section aria-label="我们的服务" style="border: 2px solid #23277A; display: flex; flex-direction: column">
+<h1 style="margin: 0; font-family: 'Barlow Condensed', 'Arial Narrow', 'Microsoft YaHei', 'PingFang SC', sans-serif; font-weight: 700; font-size: clamp(32px, 4.4vw, 52px); line-height: 1.1; text-wrap: balance">二手冷气$<span data-price="secondhand">700</span>起，包安装。维修保养也做。</h1>
+<section class="hero-svc" aria-label="我们的服务" style="border: 2px solid #23277A; display: flex; flex-direction: column">
 <div style="display: flex; align-items: stretch; border-bottom: 2px solid #23277A; font-family: 'Barlow Condensed', 'Arial Narrow', 'Microsoft YaHei', 'PingFang SC', sans-serif; font-weight: 700; font-size: 20px; letter-spacing: 0.1em"><span style="background: #23277A; color: #F6D5DC; padding: 4px 14px">&#10003;</span><span style="padding: 4px 14px">我们的服务</span></div>
-<a href="/zh/second-hand-aircon" style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 0 16px; min-height: 44px; padding: 6px 16px; border-bottom: 1px solid #23277A; text-decoration: none"><strong>二手冷气，包安装</strong><span>$700起</span></a>
-<a href="/zh/aircon-repair" style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 0 16px; min-height: 44px; padding: 6px 16px; border-bottom: 1px solid #23277A; text-decoration: none"><strong>冷气维修，所有品牌</strong><span>$40起</span></a>
-<a href="/zh/aircon-servicing" style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 0 16px; min-height: 44px; padding: 6px 16px; border-bottom: 1px solid #23277A; text-decoration: none"><strong>冷气保养</strong><span>每台$50起</span></a>
-<a href="/zh/chemical-overhaul" style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 0 16px; min-height: 44px; padding: 6px 16px; border-bottom: 1px solid #23277A; text-decoration: none"><strong>化学清洗</strong><span>每台$120起</span></a>
-<a href="/zh/aircon-installation" style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 0 16px; min-height: 44px; padding: 6px 16px; text-decoration: none"><strong>全新冷气供应与安装</strong><span>$1,350起</span></a>
+<a href="/zh/second-hand-aircon" style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 0 16px; min-height: 44px; padding: 6px 16px; border-bottom: 1px solid #23277A; text-decoration: none"><strong>二手冷气，包安装</strong><span>$<span data-price="secondhand">700</span>起</span></a>
+<a href="/zh/aircon-repair" style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 0 16px; min-height: 44px; padding: 6px 16px; border-bottom: 1px solid #23277A; text-decoration: none"><strong>冷气维修，所有品牌</strong><span>$<span data-price="repair">40</span>起</span></a>
+<a href="/zh/aircon-servicing" style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 0 16px; min-height: 44px; padding: 6px 16px; border-bottom: 1px solid #23277A; text-decoration: none"><strong>冷气保养</strong><span>每台$<span data-price="servicing">50</span>起</span></a>
+<a href="/zh/chemical-overhaul" style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 0 16px; min-height: 44px; padding: 6px 16px; border-bottom: 1px solid #23277A; text-decoration: none"><strong>化学清洗</strong><span>每台$<span data-price="chemical">120</span>起</span></a>
+<a href="/zh/aircon-installation" style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 0 16px; min-height: 44px; padding: 6px 16px; text-decoration: none"><strong>全新冷气供应与安装</strong><span>$<span data-price="newunit">1,350</span>起</span></a>
 </section>
 </div>
-<div style="flex: 0 1 300px; display: flex; flex-direction: column; align-items: center; gap: 18px">
+<div class="hero-side" style="flex: 0 1 300px; display: flex; flex-direction: column; align-items: center; gap: 18px">
 <div style="align-self: stretch; background: #FFFFFF; padding: 10px 10px 14px; transform: rotate(2deg); box-shadow: 4px 5px 0 rgba(35, 39, 122, 0.25); display: flex; flex-direction: column; gap: 8px">
 <img src="/assets/img/k2l-technician-aircon-repair.jpg" alt="K2L Aircon技术人员正在维修壁挂式冷气" style="display: block; width: 100%; height: auto">
 <div style="font-family: 'Caveat', 'Microsoft YaHei', cursive; font-size: 28px; line-height: 1; color: #1B1B1F; text-align: center">我们的师傅在工作</div>
@@ -260,6 +261,8 @@ input[type=checkbox]{accent-color:#23277A;width:24px;height:24px;margin:0;flex:0
 <div style="border-top: 1px solid #23277A; padding-top: 4px; font-size: 13px">签名：您的技术人员</div>
 </div>
 <div style="flex: 1 1 280px; display: flex; flex-direction: column; gap: 2px; font-size: 15px">
+<div>K2L Engineering Pte. Ltd.</div>
+<div>3018 Bedok North Street 5, Singapore 486132</div>
 <div>电邮: <a href="mailto:k2l.aircon.service@gmail.com" style="font-weight: 700; overflow-wrap: anywhere">k2l.aircon.service@gmail.com</a></div>
 <div>WhatsApp与电话: <a href="tel:+6587127012" style="font-weight: 700">+65 8712 7012</a></div>
 <div style="padding-top: 10px; font-size: 13px">© 2026 K2L Engineering Pte. Ltd. 版权所有。</div>
