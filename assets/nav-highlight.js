@@ -102,19 +102,40 @@
       stepButtons[0].setAttribute('aria-label', '调低温度');
       stepButtons[1].setAttribute('aria-label', '调高温度');
     }
+    // One message per setting, 18 to 30 C.
+    var TIPS_EN = [
+      '18°C? This is not aircon, this is the drinks fridge at the hawker centre. Your SP bill is shivering too. Go up a few degrees.',
+      'Penguins would feel at home. Your wallet, not so much. Colder settings usually use more power.',
+      'Cinema-at-Jewel cold. Wearing a jacket indoors in Singapore? Something is not right.',
+      'Wah, Arctic in Ang Mo Kio. Shiok for now, but the SP bill will remember.',
+      'Shopping mall cold. Nice, but your aircon is doing OT with no OT pay.',
+      'Two degrees below NEA’s 25°C tip. Comfy, yes. Cheaper, not really. Try one up?',
+      'So close to NEA’s 25°C tip. One more tap and your aircon can stop chionging.',
+      'NEA’s energy-saving pick. Steady pom pi pi: comfy and kinder to the bill.',
+      'Eco champion. Add a fan and you won’t even notice the extra degree.',
+      'Like a breezy morning at East Coast Park. Fan on, aircon relaxed, wallet smiling.',
+      'Getting toasty. If you’re sweating like waiting for the bus at noon, go down a bit.',
+      'This is basically outside weather with a remote control. A fan might do the same job.',
+      '30°C? Might as well open the window. Your aircon is on holiday.'
+    ];
+    var TIPS_ZH = [
+      '18°C？这不是冷气，是小贩中心饮料摊的冰柜了。电费单也在发抖，调高几度吧。',
+      '企鹅住这里都会很满意，你的钱包就不一定了。温度越低，通常越耗电。',
+      '冷得像星耀樟宜的电影院。在新加坡的家里还要穿外套？不太对吧。',
+      '哇，宏茂桥变北极了。现在很爽，电费单会记得的。',
+      '像商场一样冷。舒服是舒服，冷气在加班，还没有加班费。',
+      '比 NEA 建议的 25°C 低两度。舒服是有，省钱就不一定。调高一度试试？',
+      '离 NEA 的 25°C 只差一度。再按一下，冷气就不用那么拼了。',
+      'NEA 推荐的节能温度。稳稳的，舒服又对电费单友好。',
+      '节能冠军。开个风扇，多一度你都感觉不到。',
+      '像东海岸公园的清晨微风。风扇一开，冷气轻松，钱包也开心。',
+      '开始有点热了。如果流汗像中午等巴士，就调低一点吧。',
+      '这基本是户外天气加个遥控器。开风扇可能效果一样。',
+      '30°C？不如直接开窗吧。你的冷气在放假。'
+    ];
     function messageForTemperature(t) {
-      if (isChinese) {
-        if (t <= 21) return '哇，冷气开到像去北海道了。温度设得越低，通常越耗电；还舒服的话，调高一点啦。';
-        if (t <= 23) return '很凉爽，不过比 NEA 建议的 25\u00B0C 还低。调高一度，说不定一样舒服，省电一点 lah。';
-        if (t === 24) return '只比 NEA 的 25\u00B0C 节能建议低一度。觉得舒服的话，试试 25\u00B0C，让冷气也休息一下。';
-        if (t === 25) return 'NEA 的节能建议是 25\u00B0C。舒服又省心，电费也不用那么 shiong。';
-        return '冷气轻松一点 lah。觉得热的话，可以开风扇，不用马上调低温度。';
-      }
-      if (t <= 21) return 'Wah, Arctic in Ang Mo Kio. Cooler settings generally use more electricity. Bump it up if you’re still shiok.';
-      if (t <= 23) return 'Shiok, but this is cooler than NEA’s 25\u00B0C energy-saving tip. One degree up might still be shiok, lah.';
-      if (t === 24) return 'Just one degree below NEA’s 25\u00B0C tip. Try 25\u00B0C if you’re comfy. Your aircon can relax a bit too.';
-      if (t === 25) return 'NEA’s energy-saving tip is 25\u00B0C. Steady lah: comfy without asking the aircon to work extra hard.';
-      return 'Easy on the aircon, lah. If the room feels warm, a fan can bring the breeze without lowering the setpoint.';
+      var tips = isChinese ? TIPS_ZH : TIPS_EN;
+      return tips[Math.max(0, Math.min(tips.length - 1, t - 18))];
     }
     function updateTemperature() {
       screenValue.textContent = value + '\u00B0C';
