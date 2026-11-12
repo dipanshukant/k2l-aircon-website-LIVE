@@ -2,13 +2,13 @@
 
 This guide explains how the site is built, how to change it, and how to add new pages, blog pages and blog articles so they match the existing design, fonts and language.
 
-The design idea: **every page is a technician's pink carbon-copy job sheet lying on a dark blue desk.** Printed form boxes, typewriter text, a few handwritten notes, one red rubber stamp. If a new page still looks like a job sheet, it is on brand.
+The design idea: **every page is a technician's pink job sheet on a dark blue desk, with an AC unit as the shared navigation.** Printed form boxes, typewriter text, a few handwritten notes and one red rubber stamp on the homepage. The logo/contact letterhead and header card are removed.
 
 ## 1. What the site is
 
 - Plain static HTML. No framework, no build step, no CMS.
 - Hosted on Cloudflare Pages. Upload the folder as it is.
-- The homepage has a tick-box WhatsApp script. All pages load two small widget scripts (WhatsApp chat and language switcher).
+- The homepage has a tick-box WhatsApp script. All pages load the shared AC navigation script and the WhatsApp and language widget scripts.
 
 ```
 index.html                  Home
@@ -25,13 +25,22 @@ sitemap.xml
 robots.txt
 zh/                         Chinese (Simplified) translations
   index.html                Chinese home
+  about.html
   second-hand-aircon.html   Chinese second-hand page
+  aircon-repair.html
+  aircon-servicing.html
+  chemical-overhaul.html
+  aircon-installation.html
   pricing.html              Chinese pricing
   contact.html              Chinese contact
+  blog.html                 Chinese blog listing
 assets/
   img/                      Photos and the K2L logo
+  img/ac-nav-unit-noglow.png Desktop AC navigation artwork, no airflow glow
+  img/ac-nav-mobile-noglow.png Mobile and tablet AC navigation artwork, no logo or glow
   img/brands/               Brand logos
   fonts/                    Web fonts and fonts.css
+  nav-highlight.js          Shared AC navigation, sticky behavior and temperature control
   whatsapp-widget-ticket.js Floating WhatsApp chat widget (bottom-right)
   whatsapp-widget.js        Alternate dancing technician widget (not in use)
   lang-switcher.js          Language switcher widget (bottom-left)
@@ -83,9 +92,9 @@ Rules:
 
 ### Layout
 
-- The sheet is 1060px wide at most, centred on the desk, with a dotted perforation strip on top.
+- The sheet is 1060px wide at most and centred on the desk. A blank 40px pink spacer band sits above the AC nav.
 - Content sits in numbered form boxes with 2px ink borders. Boxes are numbered 1, 2, 3 in order.
-- No rounded cards, no shadows on boxes, no gradients, no icons, no emoji.
+- Keep content boxes square and simple. Do not add decorative gradients, shadows, icons or emoji to page content. The AC artwork and the two floating widgets are intentional exceptions. The AC artwork has no blue airflow glow.
 - Photos are shown as white "prints" with a small tilt of 1 to 2 degrees, usually with a handwritten caption.
 - Photos are never cropped. Use `width: 100%; height: auto`.
 
@@ -97,7 +106,7 @@ Inner pages share one small stylesheet, written in a `<style>` block in each pag
 |---|---|
 | `.desk` | Dark blue page background and base font |
 | `.sheet` | The pink paper |
-| `.perf` | Perforation strip at the top of the sheet |
+| `.perf` | Blank pink spacer band above the navigation |
 | `.in` | Inner padding of the sheet, stacks sections with a 28px gap |
 | `.lb` | Small uppercase label (13px). Sits above the headline and above fields. |
 | `.ttl` | The big headline (`h1`) |
@@ -144,19 +153,29 @@ The homepage (`index.html`) was built first and uses inline styles in place of t
 
 ## 4. Header, menu and footer
 
-The letterhead (logo, company details, "Job sheet" box), the menu and the footer are **copied into every page**. There is no shared include.
+The logo/contact letterhead and header card have been removed from every page. A blank pink spacer band remains immediately above the nav. Menu markup and the footer are **copied into every page**; there is no shared include.
 
-- To change the menu, phone number, email or footer, change it in all pages. Use find and replace across the folder.
+- To change the menu or footer, change it in all pages. Use find and replace across the folder. The old header phone number and address are no longer shown at the top of pages.
 - The footer ends with the copyright line and "Built & Maintained by SerpEyes". Keep both.
-- Menu order: Home, Second-hand, Repair, Servicing, Chemical overhaul, New aircon, Prices, About, Contact, Blog. Second-hand comes first after Home because it is the main business.
+- Menu order: Home, About, Second-hand, Repair, Servicing, Chemical overhaul, New aircon, Prices, Contact, Blog. About is second, as requested; Second-hand is the main business page.
 - Chinese pages have the same menu but in Chinese. Links point to `/zh/` versions where Chinese pages exist, and to English versions for untranslated pages.
+
+### AC navigation
+
+The primary navigation markup is copied into each page, then `assets/nav-highlight.js` wraps and styles it as the AC unit. The script is included on all English and Chinese pages.
+
+- Desktop uses the wide AC artwork; tablet and mobile use a separate compact version of the same white casing. Both artworks have the blue airflow glow removed. The mobile artwork has no logo or controls.
+- The AC navigation stays sticky on every page at desktop, tablet and mobile sizes. Desktop links sit across the front panel. On smaller screens, the transparent hamburger on the right opens the menu; the transparent temperature control is on the left.
+- The clickable temperature starts at 25 C after each page load. It opens a temperature selector and a playful Singapore-themed energy guidance panel. The panel gives general guidance, not a precise electricity-use estimate, and the selected temperature resets on refresh.
+- On inner pages, the script moves the AC nav into the `.in` page-content container so sticky positioning lasts through the full page.
+- When editing `assets/nav-highlight.js`, increment the `?v=` query in every page's script URL to refresh cached copies. When replacing either AC PNG, increment its `?v=` query in the script's CSS background URL too.
 
 ## 5. Common changes
 
 | Change | Where |
 |---|---|
 | A price | The service page, `pricing.html`, the homepage price table, and the page's meta description if it mentions the price |
-| Phone or WhatsApp number | Every page: letterhead, footer, buttons (`wa.me/6587127012` and `tel:+6587127012`), and the JSON-LD block in `<head>` |
+| Phone or WhatsApp number | Every page: footer, buttons (`wa.me/6587127012` and `tel:+6587127012`), and the JSON-LD block in `<head>` |
 | A photo | Replace the file in `assets/img` with the same name, or add a new file and update the `src` and `alt` |
 | A brand logo | `assets/img/brands`, used on `index.html` and `aircon-installation.html` |
 | Google reviews | "Customers say" boxes on `index.html`, `second-hand-aircon.html` and `aircon-repair.html`. These are short summaries, not quotes. Only use exact quotes if copied word for word from Google. |
@@ -177,7 +196,7 @@ To add an option:
 ## 6. Adding a new page
 
 1. Copy `aircon-servicing.html` and rename it using lowercase words joined by hyphens, for example `aircon-gas-top-up.html`.
-2. Keep the whole `<head>`, the letterhead, the menu and the footer. Replace only the content between the menu and the footer.
+2. Keep the whole `<head>`, the spacer band, menu and footer. Do not add a visible letterhead or header card above the menu. Keep the `assets/nav-highlight.js` script at the end of the page so the AC nav, responsive menu, sticky behavior and temperature control are added. Place the page content after the menu.
 3. Follow this order on every page:
    1. `.lb` label with the topic and "Singapore"
    2. `h1.ttl` headline
@@ -236,7 +255,7 @@ Article `<head>`: add `Article` structured data (headline, datePublished, dateMo
 
 ## 8. Chinese pages (zh/)
 
-Four pages are translated into Simplified Chinese and live in the `zh/` folder. They follow the same job-sheet design.
+The home, about, second-hand, repair, servicing, chemical overhaul, installation, pricing, contact and blog pages are translated into Simplified Chinese in the `zh/` folder. They follow the same job-sheet design.
 
 ### How Chinese pages work
 
@@ -277,6 +296,8 @@ Two floating widgets appear on every page, loaded via `<script>` tags before `</
 Both widgets are self-injecting: they create their own HTML and CSS. To change them, edit the JS file. No changes needed in the HTML pages.
 
 An alternate WhatsApp widget (`assets/whatsapp-widget.js`, dancing technician stamp style) is kept but not in use. To switch, change the script filename in all pages.
+
+The AC navigation is separate from these floating widgets. It is built from each page's primary `<nav>` by `assets/nav-highlight.js` and remains sticky on desktop, tablet and mobile.
 
 ## 10. Language and tone
 

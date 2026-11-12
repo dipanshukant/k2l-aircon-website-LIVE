@@ -6,7 +6,13 @@
       "Bash(npx wrangler:*)",
       "Bash(timeout 10 bash -c 'cat \"C:\\\\Users\\\\acer\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\c--Users-acer-Desktop-k2l-aircon-website-LIVE\\\\1a8f310a-59b8-4112-9c70-b232686f7df6\\\\tasks\\\\bkcnbuf09.output\" 2>/dev/null; sleep 8; cat \"C:\\\\Users\\\\acer\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\c--Users-acer-Desktop-k2l-aircon-website-LIVE\\\\1a8f310a-59b8-4112-9c70-b232686f7df6\\\\tasks\\\\bkcnbuf09.output\" 2>/dev/null')",
       "Bash(ipconfig)",
-      "Bash(powershell -Command \"New-NetFirewallRule -DisplayName 'Wrangler Dev Server' -Direction Inbound -Protocol TCP -LocalPort 8080 -Action Allow\")"
+      "Bash(powershell -Command \"New-NetFirewallRule -DisplayName 'Wrangler Dev Server' -Direction Inbound -Protocol TCP -LocalPort 8080 -Action Allow\")",
+      "Bash(python -c ' *)",
+      "PowerShell(& \"C:\\\\Users\\\\acer\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\bb898b5107e68686\\\\ced72214-0c21-4b55-b004-01ca2de14bdb\\\\scratchpad\\\\fix-mojibake.ps1\" -Root \"$PWD\")",
+      "Bash(npx wrangler *)",
+      "Bash(gh auth *)",
+      "Bash(grep -v '^$')",
+      "Bash(git rm *)"
     ]
   }
 }
