@@ -36,7 +36,7 @@ Notes
 - Chinese pages use system font fallbacks (Microsoft YaHei, PingFang SC) for
   Chinese characters. No extra font files needed.
 - The contact page embeds a Google Map for 3018 Bedok North Street 5.
-- sitemap.xml and robots.txt point at https://www.k2lairconsg.com. Change the domain
+- sitemap.xml and robots.txt point at https://k2lcoolaircon.com. Change the domain
   in those two files and in each page's canonical tag if the live domain is different.
 - English and Chinese page pairs are linked with hreflang tags for SEO.
 - Floating widgets:

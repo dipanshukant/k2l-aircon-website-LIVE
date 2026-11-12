@@ -329,7 +329,7 @@ Focus keywords for the site: used aircon singapore, buy used aircon singapore, b
 - [ ] Meta description of about 150 to 160 characters with the keyword and one clear benefit
 - [ ] One `h1`. Section headings are `h2`. Sub-points are `h3`.
 - [ ] The main keyword appears in the `.lb` label, in the first paragraph, and naturally once or twice more. Do not stuff.
-- [ ] Canonical tag points to the clean address on `https://www.k2lairconsg.com`
+- [ ] Canonical tag points to the clean address on `https://k2lcoolaircon.com`
 - [ ] Open Graph title, description, URL and image are set
 - [ ] JSON-LD: keep the business block, update the breadcrumb, add `Article` data on blog articles
 - [ ] Every image has descriptive `alt` text and a descriptive file name

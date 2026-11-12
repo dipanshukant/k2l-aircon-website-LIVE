@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://www.k2lairconsg.com/sitemap.xml
+Sitemap: https://k2lcoolaircon.com/sitemap.xml

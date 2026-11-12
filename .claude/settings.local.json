@@ -12,7 +12,11 @@
       "Bash(npx wrangler *)",
       "Bash(gh auth *)",
       "Bash(grep -v '^$')",
-      "Bash(git rm *)"
+      "Bash(git rm *)",
+      "Bash(git commit *)",
+      "Bash(git push *)",
+      "WebFetch(domain:developers.cloudflare.com)",
+      "Bash(git commit -q -m 'Point canonical, sitemap and structured data to k2lcoolaircon.com *)"
     ]
   }
 }
