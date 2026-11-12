@@ -39,7 +39,20 @@
       "Bash(awk '/<footer/,/<\\\\/footer>/' zh/about.html)",
       "Bash(awk '$1!=1')",
       "Bash(sed -i 's#\\\\.ttl{margin:0;font:700 clamp\\(40px,6vw,76px\\)/\\\\.95 #.ttl{margin:0;font:700 clamp\\(36px,4.6vw,56px\\)/.95 #' *.html)",
-      "Bash(sed -i 's#\\\\.ttl{margin:0;font:700 clamp\\(36px,5\\\\.5vw,68px\\)/1 #.ttl{margin:0;font:700 clamp\\(32px,4.4vw,52px\\)/1.1 #' zh/*.html)"
+      "Bash(sed -i 's#\\\\.ttl{margin:0;font:700 clamp\\(36px,5\\\\.5vw,68px\\)/1 #.ttl{margin:0;font:700 clamp\\(32px,4.4vw,52px\\)/1.1 #' zh/*.html)",
+      "Bash(curl -sL https://www.k2lairconsg.com/gallery -o /tmp/gallery.html)",
+      "Bash(grep -oE '\\(src|href\\)=\"[^\"]+\"' /tmp/gallery.html | sort -u; echo ---; sed -n '/<script/,/<\\\\/script>/p' /tmp/gallery.html | head -80)",
+      "Bash(curl -s https://www.k2lairconsg.com/_data/gallery.json -o /tmp/gallery.json)",
+      "Bash(node -e 'const d=require\\(\"/tmp/gallery.json\"\\);console.log\\(\"items:\",d.items.length\\);const c={};d.items.forEach\\(i=>c[i.cat]=\\(c[i.cat]||0\\)+1\\);console.log\\(c\\)')",
+      "Bash(node -e 'const d=JSON.parse\\(require\\(\"fs\"\\).readFileSync\\(\"gallery.json\",\"utf8\"\\)\\);console.log\\(\"items:\",d.items.length\\);const c={};d.items.forEach\\(i=>c[i.cat]=\\(c[i.cat]||0\\)+1\\);console.log\\(c\\);d.items.forEach\\(i=>console.log\\(i.cat,\"|\",i.src.split\\(\"/\"\\).pop\\(\\),\"|\",i.title\\)\\)')",
+      "Bash(mkdir -p assets/img/gallery)",
+      "Bash(node -e ' *)",
+      "Bash(node cms/build-gallery.mjs)",
+      "Bash(grep -h 'href=\"/\\\\\\(zh/\\\\\\)\\\\?chemical-overhaul\"[^>]*>[^<]*</a>' *.html zh/*.html)",
+      "Bash(grep -h '<a href=\"/\\\\\\(zh/\\\\\\)\\\\?contact\"[^>]*>[^<]*</a>' *.html zh/*.html)"
+    ],
+    "additionalDirectories": [
+      "\\tmp"
     ]
   }
 }

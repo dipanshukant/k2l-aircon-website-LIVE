@@ -21,7 +21,7 @@ Notes
 - The primary menu is enhanced by assets/nav-highlight.js on every page. It uses the
   shared AC artwork and stays sticky while scrolling on every page, on desktop,
   tablet and mobile. The menu order is Home, About, Second-hand, Repair, Servicing,
-  Chemical overhaul, New aircon, Prices, Contact and Blog.
+  New aircon, Prices, Contact, Gallery and Blog.
 - Desktop and mobile use separate AC artwork with the same white casing. The blue
   airflow glow and the mobile logo have been removed. On mobile, the temperature
   control is transparent on the left and a transparent hamburger opens the links

@@ -1,0 +1,66 @@
+{
+  "sections": [
+    {
+      "id": "second-hand",
+      "title": "Second-hand aircon",
+      "intro": "Used aircon units we have washed, tested and installed for customers across Singapore.",
+      "link": ["/second-hand-aircon", "See second-hand aircon prices"],
+      "items": [
+        ["second-hand-aircon-singapore.webp", "second-hand-aircon-installed-singapore.webp", "Second-hand wall aircon installed above a doorway in Singapore", "Wall unit above a doorway"],
+        ["second-hand-aircon-with-installation.webp", "second-hand-aircon-with-installation.webp", "Used wall-mounted aircon, sold with installation by K2L Aircon", "Sold with installation"],
+        ["second-hand-air-conditioner-singapore.webp", "used-aircon-installed-singapore.webp", "Used aircon unit installed high on a wall in Singapore", "Used unit, installed"],
+        ["reconditioned-aircon-singapore.webp", "reconditioned-aircon-installed-singapore.webp", "Reconditioned wall aircon running in a warmly lit room", "Reconditioned unit"],
+        ["second-hand-aircon-singapore-1.webp", "second-hand-aircon-above-tv.webp", "Second-hand aircon installed above a TV in a grey room", "Above the TV"],
+        ["cheap-aircon-singapore.webp", "affordable-second-hand-aircon-singapore.webp", "Affordable second-hand wall aircon fitted above a ledge", "Budget friendly"],
+        ["used-aircon-for-sale-singapore.webp", "used-ceiling-cassette-aircon-singapore.webp", "Used ceiling cassette aircon installed in a Singapore office", "Ceiling cassette"],
+        ["2nd-hand-aircon.webp", "second-hand-ceiling-cassette-office.webp", "Second-hand ceiling cassette aircon in an office with a projector", "Office ceiling cassette"],
+        ["buy-used-aircon.webp", "used-aircon-outdoor-compressor-unit.webp", "Used aircon outdoor compressor unit mounted on a bracket", "Outdoor compressor"],
+        ["second-hand-aircon-hdb.webp", "second-hand-aircon-condenser-units.webp", "Row of second-hand aircon condenser units outside a building", "Condenser units in a row"],
+        ["used-daikin-aircon.webp", "used-aircon-classroom-installation.webp", "Used aircon units installed in a school classroom", "Classroom job"],
+        ["budget-aircon-singapore.webp", "budget-aircon-school-classroom.webp", "Budget aircon units installed along a classroom wall", "Another classroom"],
+        ["used-daikin-aircon-1.webp", "used-daikin-aircon-installation-work.webp", "Technician on a ladder preparing the wall for a used Daikin aircon", "Preparing the wall"],
+        ["second-hand-aircon-hdb-1.webp", "second-hand-aircon-installation-home.webp", "Technician installing a second-hand aircon near the ceiling of a home", "Install in progress"]
+      ]
+    },
+    {
+      "id": "repair",
+      "title": "Aircon repair",
+      "intro": "Repair jobs from homes and offices. Units that would not cool, leaked water or would not turn on.",
+      "link": ["/aircon-repair", "See aircon repair"],
+      "items": [
+        ["fix-aircon.webp", "technician-fixing-aircon-office.webp", "K2L Aircon technician on a ladder fixing an office aircon", "On the ladder"],
+        ["aircon-technician-singapore.webp", "aircon-technician-singapore-at-work.webp", "Aircon technician in Singapore working beside a wall unit", "Technician at work"],
+        ["aircon-repair-singapore-1.webp", "aircon-repair-technician-renovation.webp", "Technician repairing an aircon in a room under renovation", "Mid renovation"],
+        ["aircon-repair-hdb-1.webp", "aircon-repair-technician-checking-units.webp", "Technician checking aircon units on the floor before refitting", "Checking the units"],
+        ["aircon-leaking-water-1.webp", "aircon-drainage-pipe-repair.webp", "Mitsubishi wall aircon with drainage pipes after a water leak repair", "Leak fixed"],
+        ["aircon-leaking-water.webp", "aircon-leaking-water-repair.webp", "Wall aircon repaired after leaking water", "No more leaking"],
+        ["aircon-not-cold.webp", "aircon-not-cold-repair-office.webp", "Office wall aircon repaired after it stopped cooling", "Cooling again"],
+        ["aircon-not-turning-on.webp", "aircon-unit-covered-during-repair.webp", "Wall aircon covered in plastic while being repaired", "Covered during the job"],
+        ["emergency-aircon-repair-singapore.webp", "emergency-aircon-repair-singapore.webp", "Wall aircon with new piping after an urgent repair in Singapore", "Urgent repair"],
+        ["aircon-repair-singapore.webp", "aircon-repair-wall-unit-singapore.webp", "Close view of a wall-mounted aircon after repair", "Close up"],
+        ["air-conditioner-repair-singapore.webp", "aircon-repair-blue-wall-room.webp", "Air conditioner repaired above a doorway on a blue wall", "Blue wall room"],
+        ["aircon-repair-near-me.webp", "aircon-repair-above-door.webp", "Wall aircon repaired above a wooden door", "Above the door"],
+        ["aircon-repair-hdb.webp", "aircon-repair-wall-unit-above-window.webp", "Wall aircon repaired above a window", "Above the window"],
+        ["aircon-compressor-repair-singapore.webp", "aircon-repair-white-wall-unit.webp", "Wall aircon on a white wall after repair", "Back to work"]
+      ]
+    },
+    {
+      "id": "installation",
+      "title": "New aircon installation",
+      "intro": "New units supplied and installed, from single wall units to system 4 and ceiling cassettes.",
+      "link": ["/aircon-installation", "See new aircon installation"],
+      "items": [
+        ["daikin-aircon-installation-singapore.webp", "daikin-aircon-installation-in-progress.webp", "Technician installing a new Daikin aircon in Singapore", "Daikin install"],
+        ["new-aircon-installation.webp", "new-aircon-installation-home-singapore.webp", "New wall aircon installed above shophouse artwork in a Singapore home", "Above the artwork"],
+        ["aircon-installation-price-singapore.webp", "ceiling-cassette-aircon-installation.webp", "New ceiling cassette aircon being installed, ladder below", "Ceiling cassette install"],
+        ["system-4-aircon-installation.webp", "system-4-aircon-installation-singapore.webp", "Wall unit from a system 4 aircon installation in Singapore", "System 4"],
+        ["system-3-aircon-installation.webp", "system-3-aircon-installation-singapore.webp", "Wall unit from a system 3 aircon installation on a grey wall", "System 3"],
+        ["aircon-installation-singapore.webp", "aircon-installation-singapore-office.webp", "New aircon installed above wooden doors in a Singapore office", "Office install"],
+        ["airconditioner-installation-singapore.webp", "new-wall-aircon-installed-singapore.webp", "Close view of a newly installed wall aircon", "Fresh install"],
+        ["aircon-installer-near-me.webp", "office-aircon-installation-singapore.webp", "New wall aircon installed in an open office", "Open office"],
+        ["replace-aircon-singapore.webp", "replacement-aircon-installed-singapore.webp", "Replacement aircon installed below a ceiling", "Old one replaced"],
+        ["install-aircon-hdb.webp", "wall-aircon-installed-angle-view.webp", "Side view of a newly installed wall aircon", "Side view"]
+      ]
+    }
+  ]
+}

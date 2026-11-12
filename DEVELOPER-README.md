@@ -157,7 +157,7 @@ The logo/contact letterhead and header card have been removed from every page. A
 
 - To change the menu or footer, change it in all pages. Use find and replace across the folder. The old header phone number and address are no longer shown at the top of pages.
 - The footer ends with the copyright line and "Built & Maintained by SerpEyes". Keep both.
-- Menu order: Home, About, Second-hand, Repair, Servicing, Chemical overhaul, New aircon, Prices, Contact, Blog. About is second, as requested; Second-hand is the main business page.
+- Menu order: Home, About, Second-hand, Repair, Servicing, New aircon, Prices, Contact, Gallery, Blog. Chemical overhaul is linked from the homepage services box and pricing, not the menu. About is second, as requested; Second-hand is the main business page.
 - Chinese pages have the same menu but in Chinese. Links point to `/zh/` versions where Chinese pages exist, and to English versions for untranslated pages.
 
 ### AC navigation

@@ -2,6 +2,7 @@ import { json, SLUG_RE, DATE_RE, todaySG } from '../../../lib/util.js';
 import { isAuthed, login, logoutCookie, configured } from '../../../lib/auth.js';
 import { getPrices, savePrices, PRICE_FIELDS } from '../../../lib/prices.js';
 import { postMain } from '../../../lib/render.js';
+import { SECTIONS, SECTION_IDS } from '../../../lib/gallery.js';
 
 const MAX_IMAGE = 5 * 1024 * 1024;
 
@@ -98,6 +99,64 @@ export async function onRequest({ request, env, params }) {
       return json({ prices: await savePrices(env, await request.json()) });
     }
 
+    // ----- gallery -----
+    if (route === 'gallery' && method === 'GET') {
+      const { results } = await env.DB.prepare('SELECT * FROM gallery_photos ORDER BY section, sort, id').all();
+      return json({ photos: results, sections: SECTIONS.map(({ id, title }) => ({ id, title })) });
+    }
+    if (route === 'gallery' && method === 'POST') {
+      const b = await request.json();
+      const p = validatePhoto(b);
+      const src = String(b.src || '');
+      if (!/^\/img\/[a-z0-9-]+\.(jpg|png|webp)$/.test(src)) throw new UserError('Upload the photo first.');
+      const w = Math.round(Number(b.width)), h = Math.round(Number(b.height));
+      if (!(w > 0 && h > 0 && w <= 10000 && h <= 10000)) throw new UserError('Photo size is missing.');
+      // New photos go to the top of their section.
+      const top = await env.DB.prepare('SELECT MIN(sort) m FROM gallery_photos WHERE section = ?').bind(p.section).first();
+      const row = await env.DB.prepare(
+        'INSERT INTO gallery_photos (section, src, width, height, alt, caption, sort) VALUES (?, ?, ?, ?, ?, ?, ?) RETURNING *'
+      ).bind(p.section, src, w, h, p.alt, p.caption, (top?.m ?? 1) - 1).first();
+      return json({ photo: row }, 201);
+    }
+    const g = route.match(/^gallery\/(\d+)(\/move)?$/);
+    if (g) {
+      const id = Number(g[1]);
+      const photo = await env.DB.prepare('SELECT * FROM gallery_photos WHERE id = ?').bind(id).first();
+      if (!photo) return json({ error: 'Photo not found.' }, 404);
+      if (g[2] && method === 'POST') {
+        const { dir } = await request.json();
+        const up = Number(dir) < 0;
+        const other = await env.DB.prepare(
+          up ? 'SELECT * FROM gallery_photos WHERE section = ? AND (sort < ? OR (sort = ? AND id < ?)) ORDER BY sort DESC, id DESC LIMIT 1'
+             : 'SELECT * FROM gallery_photos WHERE section = ? AND (sort > ? OR (sort = ? AND id > ?)) ORDER BY sort ASC, id ASC LIMIT 1'
+        ).bind(photo.section, photo.sort, photo.sort, photo.id).first();
+        if (other) {
+          // Swap positions; if both share a sort value, nudge apart.
+          const a = other.sort === photo.sort ? (up ? photo.sort - 1 : photo.sort + 1) : other.sort;
+          await env.DB.batch([
+            env.DB.prepare('UPDATE gallery_photos SET sort = ? WHERE id = ?').bind(a, photo.id),
+            env.DB.prepare('UPDATE gallery_photos SET sort = ? WHERE id = ?').bind(photo.sort, other.id),
+          ]);
+        }
+        return json({ ok: true });
+      }
+      if (!g[2] && method === 'PUT') {
+        const p = validatePhoto(await request.json());
+        const row = await env.DB.prepare('UPDATE gallery_photos SET section = ?, alt = ?, caption = ? WHERE id = ? RETURNING *')
+          .bind(p.section, p.alt, p.caption, id).first();
+        return json({ photo: row });
+      }
+      if (!g[2] && method === 'DELETE') {
+        await env.DB.prepare('DELETE FROM gallery_photos WHERE id = ?').bind(id).run();
+        // Remove the uploaded file too, unless a blog post still uses it.
+        if (photo.src.startsWith('/img/')) {
+          const used = await env.DB.prepare('SELECT 1 FROM posts WHERE cover = ? OR instr(body, ?) > 0 LIMIT 1').bind(photo.src, photo.src).first();
+          if (!used) await env.KV.delete('img:' + photo.src.slice(5));
+        }
+        return json({ ok: true });
+      }
+    }
+
     return json({ error: 'Not found' }, 404);
   } catch (err) {
     if (err instanceof UserError) return json({ error: err.message }, 400);
@@ -136,6 +195,17 @@ function validatePost(b) {
   if (!DATE_RE.test(p.published_at)) throw new UserError('Date must look like 2026-11-12.');
   if (p.status === 'published' && !p.body) throw new UserError('Add some article text before publishing.');
   return p;
+}
+
+function validatePhoto(b) {
+  const section = String(b.section || '');
+  if (!SECTION_IDS.includes(section)) throw new UserError('Pick a gallery section.');
+  const alt = String(b.alt ?? '').trim();
+  const caption = String(b.caption ?? '').trim();
+  if (alt.length < 10) throw new UserError('Describe the photo in a short sentence (helps Google find it).');
+  if (alt.length > 200) throw new UserError('Photo description is too long (max 200 characters).');
+  if (caption.length > 60) throw new UserError('Caption is too long (max 60 characters).');
+  return { section, alt, caption };
 }
 
 async function assertSlugFree(env, slug, exceptId = 0) {
