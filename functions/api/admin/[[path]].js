@@ -41,9 +41,9 @@ export async function onRequest({ request, env, params }) {
       const p = validatePost(await request.json());
       await assertSlugFree(env, p.slug);
       const row = await env.DB.prepare(
-        `INSERT INTO posts (slug, title, summary, note, body, cover, cover_alt, status, published_at)
-         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING *`
-      ).bind(p.slug, p.title, p.summary, p.note, p.body, p.cover, p.cover_alt, p.status, p.published_at).first();
+        `INSERT INTO posts (slug, title, meta_title, summary, note, body, cover, cover_alt, status, published_at)
+         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING *`
+      ).bind(p.slug, p.title, p.meta_title, p.summary, p.note, p.body, p.cover, p.cover_alt, p.status, p.published_at).first();
       return json({ post: row }, 201);
     }
 
@@ -58,9 +58,9 @@ export async function onRequest({ request, env, params }) {
         const p = validatePost(await request.json());
         await assertSlugFree(env, p.slug, id);
         const row = await env.DB.prepare(
-          `UPDATE posts SET slug = ?, title = ?, summary = ?, note = ?, body = ?, cover = ?, cover_alt = ?,
+          `UPDATE posts SET slug = ?, title = ?, meta_title = ?, summary = ?, note = ?, body = ?, cover = ?, cover_alt = ?,
            status = ?, published_at = ?, updated_at = datetime('now') WHERE id = ? RETURNING *`
-        ).bind(p.slug, p.title, p.summary, p.note, p.body, p.cover, p.cover_alt, p.status, p.published_at, id).first();
+        ).bind(p.slug, p.title, p.meta_title, p.summary, p.note, p.body, p.cover, p.cover_alt, p.status, p.published_at, id).first();
         return row ? json({ post: row }) : json({ error: 'Post not found.' }, 404);
       }
       if (method === 'DELETE') {
@@ -182,6 +182,7 @@ function validatePost(b) {
   const p = {
     title: str(b.title, 150, 'Title'),
     slug: str(b.slug, 100, 'Web address').toLowerCase(),
+    meta_title: str(b.meta_title, 70, 'SEO title'),
     summary: str(b.summary, 300, 'Summary'),
     note: str(b.note, 80, 'Handwritten note'),
     body: str(b.body, 100000, 'Article text'),

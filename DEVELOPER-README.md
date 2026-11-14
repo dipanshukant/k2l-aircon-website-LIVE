@@ -253,6 +253,20 @@ The "Blog" link is already in the menu on every page.
 
 Article `<head>`: add `Article` structured data (headline, datePublished, dateModified, author as K2L Aircon, image) next to the existing business data, and a three-step breadcrumb: Home, Blog, article title.
 
+### Blog article rules (every article)
+
+| Rule | Requirement |
+|---|---|
+| Length | 900 to 1000 words of body text |
+| Primary keyword | One per article. Use it in the title, the first paragraph, at least one heading, the meta title and the meta description |
+| Meta SEO title | 50 to 55 characters, counted exactly (the full browser tab title) |
+| Meta SEO description | 150 to 155 characters, counted exactly |
+| Dashes | Never use em dashes or en dashes anywhere (title, meta, body). Use commas, full stops or "to" instead. Normal hyphens in words like "second-hand" are fine |
+| Internal links | 3 to 4 links to our own pages (service pages, prices, contact, other posts) |
+| External links | 2 to 3 links to high-quality sources (for example NEA, HDB, CASE). Check every link opens before publishing |
+
+Count words and characters with a script or a counter tool before publishing. Do not guess.
+
 ## 8. Chinese pages (zh/)
 
 The home, about, second-hand, repair, servicing, chemical overhaul, installation, pricing, contact and blog pages are translated into Simplified Chinese in the `zh/` folder. They follow the same job-sheet design.

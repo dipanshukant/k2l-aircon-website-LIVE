@@ -143,7 +143,8 @@ textarea{resize:vertical}
           <label class="f"><span class="lb">Date</span><input type="date" id="date"><span class="help">Future date = goes live on that day.</span></label>
           <label class="f"><span class="lb">Handwritten note (optional)</span><input type="text" id="note" maxlength="80" placeholder="twice a year, usually"><span class="help">Short answer in handwriting, under the title.</span></label>
         </div>
-        <label class="f"><span class="lb">Summary for Google <span id="sum-count"></span></span><textarea id="summary" rows="3" maxlength="300" placeholder="One or two sentences. Shows on Google and on the blog list."></textarea><span class="help">Best length: 140 to 160 characters.</span></label>
+        <label class="f"><span class="lb">Summary for Google <span id="sum-count"></span></span><textarea id="summary" rows="3" maxlength="300" placeholder="One or two sentences. Shows on Google and on the blog list."></textarea><span class="help">Best length: 150 to 155 characters.</span></label>
+        <label class="f"><span class="lb">SEO title for Google <span id="mt-count"></span></span><input type="text" id="meta-title" maxlength="70" placeholder="Leave empty to use the title + | K2L Cool Aircon"><span class="help">Shows as the blue link on Google. Best length: 50 to 55 characters.</span></label>
         <div class="f" style="display:flex;flex-direction:column;gap:6px">
           <span class="lb">Cover photo (optional)</span>
           <div class="cover">
@@ -310,7 +311,7 @@ textarea{resize:vertical}
   // ---------- editor ----------
   let current = null; // saved post or null
   let slugTouched = false;
-  const F = ['title', 'slug', 'date', 'note', 'summary', 'cover-alt', 'body'];
+  const F = ['title', 'slug', 'date', 'note', 'summary', 'meta-title', 'cover-alt', 'body'];
 
   async function openEditor(id) {
     show('edit');
@@ -323,7 +324,7 @@ textarea{resize:vertical}
         const { post } = await api('posts/' + id);
         current = post; slugTouched = true;
         $('#title').value = post.title; $('#slug').value = post.slug; $('#date').value = post.published_at;
-        $('#note').value = post.note; $('#summary').value = post.summary; $('#cover-alt').value = post.cover_alt; $('#body').value = post.body;
+        $('#note').value = post.note; $('#summary').value = post.summary; $('#meta-title').value = post.meta_title || ''; $('#cover-alt').value = post.cover_alt; $('#body').value = post.body;
         setCover(post.cover);
       } catch (err) { toast(err.message, true); return go('#/posts'); }
     }
@@ -348,14 +349,14 @@ textarea{resize:vertical}
   $('#title').addEventListener('input', () => { if (!slugTouched) $('#slug').value = slugify($('#title').value); });
   $('#slug').addEventListener('input', () => { slugTouched = true; });
   $('#slug').addEventListener('blur', () => { $('#slug').value = slugify($('#slug').value); });
-  $('#summary').addEventListener('input', updateCount);
-  function updateCount() { const n = $('#summary').value.length; $('#sum-count').textContent = `(${n})`; }
+  $('#summary').addEventListener('input', updateCount); $('#meta-title').addEventListener('input', updateCount);
+  function updateCount() { const n = $('#summary').value.length; $('#sum-count').textContent = `(${n})`; const t = $('#meta-title').value.length; $('#mt-count').textContent = t ? `(${t})` : ''; }
   $('#post-form').addEventListener('input', () => { dirty = true; schedulePreview(); });
 
   function formData(status) {
     return {
       title: $('#title').value, slug: slugify($('#slug').value || $('#title').value), published_at: $('#date').value || today(),
-      note: $('#note').value, summary: $('#summary').value, cover: $('#cover-img').dataset.url || '', cover_alt: $('#cover-alt').value,
+      note: $('#note').value, summary: $('#summary').value, meta_title: $('#meta-title').value, cover: $('#cover-img').dataset.url || '', cover_alt: $('#cover-alt').value,
       body: $('#body').value, status,
     };
   }

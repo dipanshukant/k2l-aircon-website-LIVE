@@ -2,6 +2,7 @@ CREATE TABLE IF NOT EXISTS posts (
   id           INTEGER PRIMARY KEY AUTOINCREMENT,
   slug         TEXT NOT NULL UNIQUE,
   title        TEXT NOT NULL,
+  meta_title   TEXT NOT NULL DEFAULT '',
   summary      TEXT NOT NULL DEFAULT '',
   note         TEXT NOT NULL DEFAULT '',
   body         TEXT NOT NULL DEFAULT '',
