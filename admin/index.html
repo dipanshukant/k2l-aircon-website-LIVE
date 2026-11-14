@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
 <title>K2L Website Admin</title>
-<link rel="icon" type="image/png" href="/assets/img/k2l-aircon-logo.png">
+<link rel="icon" type="image/png" href="/assets/img/k2l-aircon-logo.png?v=2">
 <link rel="stylesheet" href="/assets/fonts/fonts.css">
 <style>
 :root{--desk:#1B1F5C;--paper:#F6D5DC;--ink:#23277A;--hand:#1B1B1F;--red:#C22B2B;--head:'Barlow Condensed','Arial Narrow',sans-serif;--body:'Courier Prime','Courier New',monospace}
@@ -505,7 +505,7 @@ textarea{resize:vertical}
   let logoImg = null;
   async function loadLogo() {
     if (logoImg) return logoImg;
-    logoImg = new Image(); logoImg.src = '/assets/img/k2l-aircon-logo-full.png';
+    logoImg = new Image(); logoImg.src = '/assets/img/k2l-aircon-logo-full.png?v=2';
     await new Promise((ok, bad) => { logoImg.onload = ok; logoImg.onerror = () => bad(new Error('Could not load the logo.')); });
     return logoImg;
   }
