@@ -41,10 +41,10 @@
 
   var el = document.createElement('a');
   el.id = 'k2l-tk';
-  el.href = 'https://wa.me/6587127012?text=Hi%20K2L%2C%20I%20need%20help%20with%20my%20aircon.';
+  el.href = 'https://wa.me/6587127012?text=Hi%20K2L%20Cool%2C%20I%20need%20help%20with%20my%20aircon.';
   el.target = '_blank';
   el.rel = 'noopener';
-  el.setAttribute('aria-label', 'Chat with K2L Aircon on WhatsApp');
+  el.setAttribute('aria-label', 'Chat with K2L Cool Aircon on WhatsApp');
   el.innerHTML =
     '<div id="k2l-tk-card">' +
       '<div id="k2l-tk-perf"></div>' +

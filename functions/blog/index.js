@@ -7,8 +7,8 @@ export async function onRequestGet({ request, env }) {
   ).bind(todaySG()).all();
 
   const html = page(await loadTemplate(env, request), {
-    title: 'Aircon Tips and Guides Singapore | K2L Aircon',
-    description: 'Aircon tips, servicing guides and honest advice from K2L Aircon in Singapore. No jargon, just what you need to know about your AC.',
+    title: 'Aircon Tips and Guides Singapore | K2L Cool Aircon',
+    description: 'Aircon tips, servicing guides and honest advice from K2L Cool Aircon in Singapore. No jargon, just what you need to know about your AC.',
     path: '/blog',
     hreflang: true,
     breadcrumb: [['Home', '/'], ['Blog', '/blog']],
