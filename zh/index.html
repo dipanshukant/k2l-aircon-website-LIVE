@@ -24,7 +24,20 @@
 body{margin:0}
 a{color:inherit}a:hover{color:inherit;opacity:.75}
 input[type=checkbox]{accent-color:#23277A;width:24px;height:24px;margin:0;flex:0 0 auto}
-@media (max-width:767px){.hero{flex-direction:column;align-items:stretch!important}.hero-main{display:contents!important}.hero-side{order:1;flex:none!important}.hero-svc{order:2}}
+@media (max-width:767px){.hero{flex-direction:column;align-items:stretch!important}.hero-main{display:contents!important}.hero-side{order:1;flex:none!important}}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:0;padding:0;list-style:none}
+.opt{position:relative;display:flex;flex-direction:column;gap:10px;height:100%;box-sizing:border-box;padding:14px 16px 14px;background:rgba(255,255,255,.55);border:2px solid #23277A;box-shadow:5px 5px 0 #23277A;text-decoration:none;transition:transform .15s ease,box-shadow .15s ease,background .15s ease}
+.opt:hover,.opt:focus-visible{opacity:1;transform:translate(-2px,-2px);box-shadow:7px 7px 0 #23277A;background:#FFFFFF}
+.opt:active{transform:translate(3px,3px);box-shadow:2px 2px 0 #23277A}
+.opt-top{display:flex;justify-content:space-between;align-items:center}
+.opt-n{background:#23277A;color:#F6D5DC;font:700 15px/1 'Barlow Condensed','Arial Narrow',sans-serif;letter-spacing:.08em;padding:5px 8px}
+.opt svg{width:30px;height:30px;flex:0 0 auto}
+.opt-t{font-family:'Barlow Condensed','Arial Narrow','Microsoft YaHei','PingFang SC',sans-serif;font-weight:700;font-size:clamp(22px,2.6vw,30px);line-height:1;text-transform:uppercase;letter-spacing:.01em;flex:1}
+.opt-p{display:flex;justify-content:space-between;align-items:center;gap:8px;border-top:1px dashed #23277A;padding-top:8px;font-size:15px}
+.opt-p b{font:700 22px/1 'Barlow Condensed','Arial Narrow',sans-serif;transition:transform .15s ease}
+.opt:hover .opt-p b{transform:translateX(4px)}
+@media (max-width:767px){.opts{gap:12px}.opt{padding:11px 12px;gap:8px;box-shadow:4px 4px 0 #23277A}.opt svg{width:24px;height:24px}.opt-t{font-size:21px}.opt-p{font-size:13px}.opt-n{font-size:13px;padding:4px 6px}}
+@media (prefers-reduced-motion:reduce){.opt,.opt-p b{transition:none}}
 </style>
 <script type="application/ld+json">[{"@context": "https://schema.org", "@type": "HVACBusiness", "@id": "https://k2lcoolaircon.com/#business", "name": "K2L Aircon", "legalName": "K2L Engineering Pte. Ltd.", "url": "https://k2lcoolaircon.com/", "logo": "https://k2lcoolaircon.com/assets/img/k2l-aircon-logo.png", "image": "https://k2lcoolaircon.com/assets/img/k2l-aircon-van.jpg?v=2", "telephone": "+6587127012", "email": "k2l.aircon.service@gmail.com", "priceRange": "$$", "address": {"@type": "PostalAddress", "streetAddress": "12 Tampines North Dr. 4, #08-07", "postalCode": "529435", "addressLocality": "Singapore", "addressCountry": "SG"}, "areaServed": {"@type": "Country", "name": "Singapore"}, "description": "新加坡二手冷气销售、冷气维修、保养、化学清洗及全新冷气安装。"}]</script>
 </head>
@@ -55,16 +68,13 @@ input[type=checkbox]{accent-color:#23277A;width:24px;height:24px;margin:0;flex:0
 <!-- INTRO -->
 <div class="hero" style="display: flex; flex-wrap: wrap; align-items: center; gap: 20px 48px; border-top: 4px double #23277A; padding-top: 28px">
 <div class="hero-main" style="flex: 999 1 480px; min-width: 0; display: flex; flex-direction: column; gap: 18px">
-<div style="font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase">冷气销售、维修与保养，新加坡</div>
-<h1 style="margin: 0; font-family: 'Barlow Condensed', 'Arial Narrow', 'Microsoft YaHei', 'PingFang SC', sans-serif; font-weight: 700; font-size: clamp(32px, 4.4vw, 52px); line-height: 1.1; text-wrap: balance">二手冷气$<span data-price="secondhand">700</span>起，包安装。维修保养也做。</h1>
-<section class="hero-svc" aria-label="我们的服务" style="border: 2px solid #23277A; display: flex; flex-direction: column">
-<div style="display: flex; align-items: stretch; border-bottom: 2px solid #23277A; font-family: 'Barlow Condensed', 'Arial Narrow', 'Microsoft YaHei', 'PingFang SC', sans-serif; font-weight: 700; font-size: 20px; letter-spacing: 0.1em"><span style="background: #23277A; color: #F6D5DC; padding: 4px 14px">&#10003;</span><span style="padding: 4px 14px">我们的服务</span></div>
-<a href="/zh/second-hand-aircon" style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 0 16px; min-height: 44px; padding: 6px 16px; border-bottom: 1px solid #23277A; text-decoration: none"><strong>二手冷气，包安装</strong><span>$<span data-price="secondhand">700</span>起</span></a>
-<a href="/zh/aircon-repair" style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 0 16px; min-height: 44px; padding: 6px 16px; border-bottom: 1px solid #23277A; text-decoration: none"><strong>冷气维修，所有品牌</strong><span>$<span data-price="repair">40</span>起</span></a>
-<a href="/zh/aircon-servicing" style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 0 16px; min-height: 44px; padding: 6px 16px; border-bottom: 1px solid #23277A; text-decoration: none"><strong>冷气保养</strong><span>每台$<span data-price="servicing">50</span>起</span></a>
-<a href="/zh/chemical-overhaul" style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 0 16px; min-height: 44px; padding: 6px 16px; border-bottom: 1px solid #23277A; text-decoration: none"><strong>化学清洗</strong><span>每台$<span data-price="chemical">120</span>起</span></a>
-<a href="/zh/aircon-installation" style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 0 16px; min-height: 44px; padding: 6px 16px; text-decoration: none"><strong>全新冷气供应与安装</strong><span>$<span data-price="newunit">1,350</span>起</span></a>
-</section>
+<h1 style="margin: 0; font-size: 13px; font-weight: 400; letter-spacing: 0.08em; text-transform: uppercase">冷气销售、维修与保养，新加坡</h1>
+<ul class="opts" aria-label="我们的四项服务">
+<li><a class="opt" href="/zh/second-hand-aircon"><span class="opt-top"><span class="opt-n">01</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12.6 2.6A2 2 0 0 0 11.2 2H4a2 2 0 0 0-2 2v7.2a2 2 0 0 0 .6 1.4l8.7 8.7a2.4 2.4 0 0 0 3.4 0l6.6-6.6a2.4 2.4 0 0 0 0-3.4z"/><circle cx="7.5" cy="7.5" r="1.2" fill="currentColor"/></svg></span><strong class="opt-t">二手冷气</strong><span class="opt-p"><span>$<span data-price="secondhand">700</span>起</span><b aria-hidden="true">&rarr;</b></span></a></li>
+<li><a class="opt" href="/zh/aircon-installation"><span class="opt-top"><span class="opt-n">02</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 12H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><path d="M6 8h12"/><path d="M18.3 17.7a2.5 2.5 0 0 1-3.2 3.8 2.5 2.5 0 0 1-1.1-2V12"/><path d="M6.6 15.6A2 2 0 1 0 10 17v-5"/></svg></span><strong class="opt-t">全新冷气</strong><span class="opt-p"><span>$<span data-price="newunit">1,350</span>起</span><b aria-hidden="true">&rarr;</b></span></a></li>
+<li><a class="opt" href="/zh/aircon-repair"><span class="opt-top"><span class="opt-n">03</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.8-3.8a6 6 0 0 1-7.9 7.9l-6.9 6.9a2.1 2.1 0 0 1-3-3l6.9-6.9a6 6 0 0 1 7.9-7.9z"/></svg></span><strong class="opt-t">冷气维修</strong><span class="opt-p"><span>$<span data-price="repair">40</span>起</span><b aria-hidden="true">&rarr;</b></span></a></li>
+<li><a class="opt" href="/zh/aircon-servicing"><span class="opt-top"><span class="opt-n">04</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 16.3c2.2 0 4-1.8 4-4 0-1.2-.6-2.3-1.7-3.2S7.3 6.8 7 5.3c-.3 1.5-1.1 2.8-2.3 3.8S3 11.1 3 12.3c0 2.2 1.8 4 4 4z"/><path d="M12.6 6.6A11 11 0 0 0 14 3c.5 2.5 2 4.9 4 6.5s3 3.5 3 5.5a7 7 0 0 1-11.9 5"/></svg></span><strong class="opt-t">冷气清洗</strong><span class="opt-p"><span>$<span data-price="servicing">50</span>起</span><b aria-hidden="true">&rarr;</b></span></a></li>
+</ul>
 </div>
 <div class="hero-side" style="flex: 0 1 300px; display: flex; flex-direction: column; align-items: center; gap: 18px">
 <div style="align-self: stretch; background: #FFFFFF; padding: 10px 10px 14px; transform: rotate(2deg); box-shadow: 4px 5px 0 rgba(35, 39, 122, 0.25); display: flex; flex-direction: column; gap: 8px">
