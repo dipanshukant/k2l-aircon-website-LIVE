@@ -206,6 +206,8 @@ To add an option:
    6. A `.bx` with 3 to 5 numbered sections
    7. The footer
 4. Update the `<head>`: `<title>`, meta description, canonical, Open Graph title, description and URL, and the breadcrumb in the JSON-LD block.
+   - Service pages also carry `Service` and `FAQPage` blocks in the JSON-LD. Never type a price number into JSON-LD. Use `[[num:key]]` for an Offer `price` (gives `700`) and `[[price:key]]` inside text (gives `1,350`). The middleware fills them from the CMS prices, the same keys as `data-price` (`secondhand`, `newunit`, `repair`, `servicing`, `gas`, `chemical`).
+   - Every service page ends with a "Questions people ask" FAQ section. The `FAQPage` JSON-LD must say the same questions and answers as the visible FAQ.
 5. Add the page to `sitemap.xml`.
 6. Link to it from at least two existing pages, and link from it to at least two others. Add it to the menu only if it is a main service.
 7. Check it at 1440px, 768px and 390px wide. Nothing may scroll sideways.
@@ -216,12 +218,23 @@ Use the same sheet, fonts and boxes. A blog article is a job sheet too, so it mu
 
 ### Addresses and files
 
-| Page | File | Address |
-|---|---|---|
-| Blog index | `blog.html` | `/blog` |
-| Article | `blog/how-often-to-service-aircon.html` | `/blog/how-often-to-service-aircon` |
+Articles are written in the CMS at `/admin` and stored in D1 (`posts` table). There are no article HTML files.
 
-Files inside `blog/` are one folder down, so relative paths break. In those files, start every path with a slash: `/assets/fonts/fonts.css`, `/assets/img/...`, `/aircon-repair`. Also change the font paths check: `fonts.css` already uses paths relative to itself, so it needs no change.
+| Page | Built from | Address |
+|---|---|---|
+| English blog list | `blog.html` (template) + `functions/blog/index.js` | `/blog` |
+| English article | `functions/blog/[slug].js` | `/blog/<slug>` |
+| Chinese blog list | `zh/blog.html` (template) + `functions/zh/blog/index.js` | `/zh/blog` |
+| Chinese article | `functions/zh/blog/[slug].js` | `/zh/blog/<slug>` |
+
+`blog.html` and `zh/blog.html` are only templates (menu, styles, footer). The build copies them to `blog-template.html`, which is not public. Shared logic is in `lib/blog.js` and `lib/render.js`. The article text and its markdown copy for reference are in `cms/posts/`.
+
+### Chinese articles
+
+- In the editor, pick **Language: 中文**. The post shows on `/zh/blog`.
+- Web addresses must be unique across both languages, so give Chinese posts a pinyin address, for example `lengqi-duojiu-baoyang-yici-xinjiapo`.
+- Fill **English version** with the English post's web address. Both posts then get `hreflang` links to each other, and the language switcher jumps between them. The link only appears once both are live.
+- Chinese meta title: about 20 to 30 characters. Chinese summary: about 50 to 80 characters. The English 50 to 55 and 150 to 155 counts do not apply to Chinese.
 
 The "Blog" link is already in the menu on every page.
 
@@ -297,6 +310,18 @@ The home, about, second-hand, repair, servicing, chemical overhaul, installation
 - Area names in Chinese: 勿洛 (Bedok), 淡滨尼 (Tampines), 榜鹅 (Punggol), etc.
 - Tone should match the English: friendly, honest, direct. Not formal or stiff.
 - Prices stay in S$ with the same "from" phrasing: "$700起".
+
+### Area and brand pages (English only)
+
+| Type | Pages |
+|---|---|
+| Area | `aircon-service-tampines`, `aircon-service-bedok`, `aircon-service-punggol`, `aircon-service-jurong-west`, `aircon-service-woodlands` |
+| Brand | `daikin-aircon-repair`, `mitsubishi-aircon-repair`, `panasonic-aircon-repair`, `lg-aircon-repair` |
+
+Rules for adding more:
+- Each page needs real, local content (the housing in that area, nearby places, typical jobs). Never copy one area page and only change the name. Google treats that as spam.
+- Brand pages must say clearly that K2L Cool is independent and not the official service centre for that brand.
+- Link every new page from the "Areas and brands we cover" section on `aircon-repair.html`, `aircon-servicing.html` and `contact.html`, from `sitemap.html`, and add it to `sitemap.xml`.
 
 ## 9. Floating widgets
 
