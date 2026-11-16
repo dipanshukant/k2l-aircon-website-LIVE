@@ -5,7 +5,7 @@
   var css = document.createElement('style');
   css.textContent =
     '.ac-nav-shell{position:relative;width:100%;aspect-ratio:6/1;margin:0 0 18px}' +
-    '.ac-nav-shell:before{content:"";position:absolute;z-index:0;inset:0;background:url("/assets/img/ac-nav-unit-noglow.png?v=35") center/100% 100% no-repeat;-webkit-mask-image:none;mask-image:none;pointer-events:none}' +
+    '.ac-nav-shell:before{content:"";position:absolute;z-index:0;inset:0;background:url("/assets/img/ac-nav-unit-noglow.webp?v=36") center/100% 100% no-repeat;-webkit-mask-image:none;mask-image:none;pointer-events:none}' +
     '.ac-nav-shell nav[aria-label]{position:absolute!important;z-index:1;top:27%!important;left:3.5%!important;width:84%!important;height:35%!important;box-sizing:border-box!important;display:flex!important;flex-wrap:nowrap!important;align-items:center!important;gap:0!important;overflow-x:auto;scrollbar-width:none;border:0!important;background:transparent!important;padding:0 2px!important;font-family:"Barlow Condensed","Arial Narrow","Microsoft YaHei",sans-serif!important;font-size:clamp(12px,1.1vw,17px)!important;font-weight:700!important;letter-spacing:.015em!important;text-transform:uppercase;box-shadow:none!important}' +
     '.ac-nav-shell nav::-webkit-scrollbar{display:none}' +
     '.ac-nav-shell nav a{box-sizing:border-box!important;display:flex!important;flex:1 0 auto;align-items:center!important;justify-content:center;min-height:80%!important;padding:0 clamp(5px,.62vw,10px)!important;border-right:1px solid #c6c8d6;text-align:center;text-decoration:none!important;color:#19245f!important;white-space:nowrap;line-height:1!important;transition:background .15s,color .15s,box-shadow .15s}' +
@@ -61,7 +61,7 @@
     brand.className = 'ac-nav-mobile-brand';
     brand.href = isChinese ? '/zh/' : '/';
     brand.setAttribute('aria-label', isChinese ? 'K2L Cool 冷气首页' : 'K2L Cool Aircon home');
-    brand.innerHTML = '<img src="/assets/img/k2l-aircon-logo-full.png?v=2" alt="" width="160" height="103">';
+    brand.innerHTML = '<img src="/assets/img/k2l-aircon-logo-full.webp?v=2" alt="" width="160" height="103">';
     temp.appendChild(brand);
     shell.appendChild(temp);
 

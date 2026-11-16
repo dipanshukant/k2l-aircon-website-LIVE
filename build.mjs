@@ -17,6 +17,7 @@ for (const f of readdirSync('zh').filter((f) => f.endsWith('.html'))) {
 cpSync('assets', `${OUT}/assets`, { recursive: true });
 cpSync('admin', `${OUT}/admin`, { recursive: true });
 copyFileSync('robots.txt', `${OUT}/robots.txt`);
+copyFileSync('llms.txt', `${OUT}/llms.txt`);
 copyFileSync('sitemap.xml', `${OUT}/sitemap-static.xml`);
 
 console.log('Built', OUT);

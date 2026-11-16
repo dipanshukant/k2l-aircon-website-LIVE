@@ -48,7 +48,7 @@ Most homes take under an hour per unit. If the technician finds something that n
 
 General servicing cleans the parts you can reach. Over time, dirt also builds up deep inside the unit, on the blower wheel and in the drain tray. Normal servicing cannot reach there.
 
-![Inside of a wall aircon unit before a chemical overhaul, with the coil clogged by dust and mould](/assets/img/aircon-chemical-overhaul-before.jpg "what a year without deep cleaning looks like")
+![Inside of a wall aircon unit before a chemical overhaul, with the coil clogged by dust and mould](/assets/img/aircon-chemical-overhaul-before.webp "what a year without deep cleaning looks like")
 
 If your unit still smells, drips or feels weak after a normal service, it probably needs a [chemical overhaul](/chemical-overhaul). The technician takes the unit apart, soaks and washes each part, rinses everything clean and puts it back together. For a unit used every day, once a year is usually enough, with general servicing every few months in between.
 
