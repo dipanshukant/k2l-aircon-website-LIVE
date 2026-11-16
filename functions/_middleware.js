@@ -1,4 +1,4 @@
-import { getPrices, formatPrice } from '../lib/prices.js';
+import { getPrices, formatPrice, DEFAULT_PRICES } from '../lib/prices.js';
 
 export async function onRequest(context) {
   const { request, env } = context;
@@ -27,12 +27,30 @@ export async function onRequest(context) {
   // Fill in the prices saved in the CMS on every HTML page.
   if (!(response.headers.get('content-type') || '').includes('text/html')) return response;
   let prices;
-  try { prices = await getPrices(env); } catch { return response; }
+  try { prices = await getPrices(env); } catch { prices = DEFAULT_PRICES; }
+  // Structured data carries [[price:key]] (formatted) and [[num:key]] (plain) tokens.
+  const fillTokens = (s) => s.replace(/\[\[(price|num):(\w+)\]\]/g, (m, kind, key) => {
+    const v = prices[key] ?? DEFAULT_PRICES[key];
+    if (v == null) return m;
+    return kind === 'num' ? String(v) : formatPrice(v);
+  });
+  let ld = '';
   return new HTMLRewriter()
     .on('[data-price]', {
       element(el) {
         const v = prices[el.getAttribute('data-price')];
         if (v != null) el.setInnerContent(formatPrice(v));
+      },
+    })
+    .on('script[type="application/ld+json"]', {
+      text(t) {
+        ld += t.text;
+        if (t.lastInTextNode) {
+          t.replace(fillTokens(ld), { html: true });
+          ld = '';
+        } else {
+          t.remove();
+        }
       },
     })
     .transform(response);
