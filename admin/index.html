@@ -135,9 +135,13 @@ textarea{resize:vertical}
           <button type="button" class="ghost" id="back">&larr; All posts</button>
           <span id="status-chip"></span>
         </div>
+        <div class="grid2">
+          <label class="f"><span class="lb">Language</span><select id="lang" class="sel"><option value="en">English (/blog)</option><option value="zh">中文 Chinese (/zh/blog)</option></select><span class="help">Chinese posts show on the Chinese blog.</span></label>
+          <label class="f" id="tr-wrap" hidden><span class="lb">English version (optional)</span><input type="text" id="translation-of" maxlength="100" placeholder="used-aircon-vs-new-aircon-singapore"><span class="help">Web address of the English post this translates. Links the two for Google.</span></label>
+        </div>
         <label class="f"><span class="lb">Title</span><input type="text" id="title" maxlength="150" placeholder="How often should you service your aircon?" required></label>
         <label class="f"><span class="lb">Web address</span>
-          <div class="slug"><span>/blog/</span><input type="text" id="slug" maxlength="100" placeholder="how-often-to-service-aircon"></div>
+          <div class="slug"><span id="slug-prefix">/blog/</span><input type="text" id="slug" maxlength="100" placeholder="how-often-to-service-aircon"></div>
           <span class="help">Filled in from the title. Avoid changing it after publishing, old links would break.</span></label>
         <div class="grid2">
           <label class="f"><span class="lb">Date</span><input type="date" id="date"><span class="help">Future date = goes live on that day.</span></label>
@@ -299,9 +303,10 @@ textarea{resize:vertical}
       if (!posts.length) { list.innerHTML = '<div class="empty"><div class="hw">no posts yet</div><p>Click <strong>+ New post</strong> to write the first one.</p></div>'; return; }
       list.innerHTML = posts.map((p) => {
         const state = p.status === 'draft' ? ['draft', 'Draft'] : p.published_at > today ? ['soon', 'Scheduled'] : ['live', 'Live'];
-        return `<div class="row"><div class="t">${esc(p.title)}<div class="meta">${pretty(p.published_at)} &middot; /blog/${esc(p.slug)}</div></div>
+        const url = postUrl(p.lang, p.slug);
+        return `<div class="row"><div class="t">${p.lang === 'zh' ? '<span class="chip">中文</span> ' : ''}${esc(p.title)}<div class="meta">${pretty(p.published_at)} &middot; ${esc(url)}</div></div>
           <span class="chip ${state[0]}">${state[1]}</span>
-          <div class="actions"><a class="btn" href="#/edit/${p.id}">Edit</a><a class="ghost" href="/blog/${esc(p.slug)}" target="_blank" rel="noopener">View</a></div></div>`;
+          <div class="actions"><a class="btn" href="#/edit/${p.id}">Edit</a><a class="ghost" href="${esc(url)}" target="_blank" rel="noopener">View</a></div></div>`;
       }).join('');
     } catch (err) { list.innerHTML = `<div class="empty">${esc(err.message)}</div>`; }
   }
@@ -311,12 +316,20 @@ textarea{resize:vertical}
   // ---------- editor ----------
   let current = null; // saved post or null
   let slugTouched = false;
-  const F = ['title', 'slug', 'date', 'note', 'summary', 'meta-title', 'cover-alt', 'body'];
+  const F = ['title', 'slug', 'date', 'note', 'summary', 'meta-title', 'cover-alt', 'body', 'translation-of'];
+  function postUrl(lang, slug) { return (lang === 'zh' ? '/zh/blog/' : '/blog/') + slug; }
+  function syncLang() {
+    const zh = $('#lang').value === 'zh';
+    $('#slug-prefix').textContent = zh ? '/zh/blog/' : '/blog/';
+    $('#tr-wrap').hidden = !zh;
+  }
+  $('#lang').addEventListener('change', syncLang);
 
   async function openEditor(id) {
     show('edit');
     current = null; slugTouched = false; dirty = false;
     F.forEach((f) => ($('#' + f).value = ''));
+    $('#lang').value = 'en';
     setCover('');
     $('#date').value = today();
     if (id) {
@@ -325,9 +338,11 @@ textarea{resize:vertical}
         current = post; slugTouched = true;
         $('#title').value = post.title; $('#slug').value = post.slug; $('#date').value = post.published_at;
         $('#note').value = post.note; $('#summary').value = post.summary; $('#meta-title').value = post.meta_title || ''; $('#cover-alt').value = post.cover_alt; $('#body').value = post.body;
+        $('#lang').value = post.lang === 'zh' ? 'zh' : 'en'; $('#translation-of').value = post.translation_of || '';
         setCover(post.cover);
       } catch (err) { toast(err.message, true); return go('#/posts'); }
     }
+    syncLang();
     refreshEditorState(); updatePreview(); updateCount();
     if (!id) $('#title').focus();
   }
@@ -338,7 +353,7 @@ textarea{resize:vertical}
     $('#save-draft').textContent = live ? 'Unpublish' : 'Save draft';
     $('#delete').hidden = !current;
     $('#view-live').hidden = !current;
-    if (current) $('#view-live').href = '/blog/' + current.slug;
+    if (current) $('#view-live').href = postUrl(current.lang, current.slug);
     $('#view-live').textContent = live ? 'Open page' : 'Open preview';
     $('#status-chip').innerHTML = !current ? '<span class="chip draft">New, not saved</span>'
       : live ? (current.published_at > today() ? '<span class="chip soon">Scheduled</span>' : '<span class="chip live">Live on website</span>')
@@ -358,6 +373,7 @@ textarea{resize:vertical}
       title: $('#title').value, slug: slugify($('#slug').value || $('#title').value), published_at: $('#date').value || today(),
       note: $('#note').value, summary: $('#summary').value, meta_title: $('#meta-title').value, cover: $('#cover-img').dataset.url || '', cover_alt: $('#cover-alt').value,
       body: $('#body').value, status,
+      lang: $('#lang').value, translation_of: $('#lang').value === 'zh' ? slugify($('#translation-of').value) : '',
     };
   }
 

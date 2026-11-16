@@ -11,7 +11,11 @@ CREATE TABLE IF NOT EXISTS posts (
   status       TEXT NOT NULL DEFAULT 'draft' CHECK (status IN ('draft', 'published')),
   published_at TEXT NOT NULL,
   created_at   TEXT NOT NULL DEFAULT (datetime('now')),
-  updated_at   TEXT NOT NULL DEFAULT (datetime('now'))
+  updated_at   TEXT NOT NULL DEFAULT (datetime('now')),
+  -- 'en' posts live at /blog/<slug>, 'zh' posts at /zh/blog/<slug>.
+  lang         TEXT NOT NULL DEFAULT 'en' CHECK (lang IN ('en','zh')),
+  -- For a zh post: slug of the English post it translates (links them with hreflang).
+  translation_of TEXT NOT NULL DEFAULT ''
 );
 
 CREATE INDEX IF NOT EXISTS posts_status_date ON posts (status, published_at DESC);

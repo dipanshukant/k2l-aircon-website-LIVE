@@ -11,7 +11,9 @@ mkdirSync(OUT + '/zh', { recursive: true });
 for (const f of readdirSync('.').filter((f) => f.endsWith('.html'))) {
   copyFileSync(f, `${OUT}/${f === 'blog.html' ? 'blog-template.html' : f}`);
 }
-for (const f of readdirSync('zh').filter((f) => f.endsWith('.html'))) copyFileSync(`zh/${f}`, `${OUT}/zh/${f}`);
+for (const f of readdirSync('zh').filter((f) => f.endsWith('.html'))) {
+  copyFileSync(`zh/${f}`, `${OUT}/zh/${f === 'blog.html' ? 'blog-template.html' : f}`);
+}
 cpSync('assets', `${OUT}/assets`, { recursive: true });
 cpSync('admin', `${OUT}/admin`, { recursive: true });
 copyFileSync('robots.txt', `${OUT}/robots.txt`);

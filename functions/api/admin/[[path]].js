@@ -33,17 +33,18 @@ export async function onRequest({ request, env, params }) {
 
     if (route === 'posts' && method === 'GET') {
       const { results } = await env.DB.prepare(
-        'SELECT id, slug, title, status, published_at, updated_at FROM posts ORDER BY published_at DESC, id DESC'
+        'SELECT id, slug, lang, title, status, published_at, updated_at FROM posts ORDER BY published_at DESC, id DESC'
       ).all();
       return json({ posts: results, today: todaySG() });
     }
     if (route === 'posts' && method === 'POST') {
       const p = validatePost(await request.json());
       await assertSlugFree(env, p.slug);
+      await assertTranslation(env, p);
       const row = await env.DB.prepare(
-        `INSERT INTO posts (slug, title, meta_title, summary, note, body, cover, cover_alt, status, published_at)
-         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING *`
-      ).bind(p.slug, p.title, p.meta_title, p.summary, p.note, p.body, p.cover, p.cover_alt, p.status, p.published_at).first();
+        `INSERT INTO posts (slug, lang, translation_of, title, meta_title, summary, note, body, cover, cover_alt, status, published_at)
+         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING *`
+      ).bind(p.slug, p.lang, p.translation_of, p.title, p.meta_title, p.summary, p.note, p.body, p.cover, p.cover_alt, p.status, p.published_at).first();
       return json({ post: row }, 201);
     }
 
@@ -57,10 +58,11 @@ export async function onRequest({ request, env, params }) {
       if (method === 'PUT') {
         const p = validatePost(await request.json());
         await assertSlugFree(env, p.slug, id);
+        await assertTranslation(env, p);
         const row = await env.DB.prepare(
-          `UPDATE posts SET slug = ?, title = ?, meta_title = ?, summary = ?, note = ?, body = ?, cover = ?, cover_alt = ?,
+          `UPDATE posts SET slug = ?, lang = ?, translation_of = ?, title = ?, meta_title = ?, summary = ?, note = ?, body = ?, cover = ?, cover_alt = ?,
            status = ?, published_at = ?, updated_at = datetime('now') WHERE id = ? RETURNING *`
-        ).bind(p.slug, p.title, p.meta_title, p.summary, p.note, p.body, p.cover, p.cover_alt, p.status, p.published_at, id).first();
+        ).bind(p.slug, p.lang, p.translation_of, p.title, p.meta_title, p.summary, p.note, p.body, p.cover, p.cover_alt, p.status, p.published_at, id).first();
         return row ? json({ post: row }) : json({ error: 'Post not found.' }, 404);
       }
       if (method === 'DELETE') {
@@ -72,7 +74,7 @@ export async function onRequest({ request, env, params }) {
     if (route === 'preview' && method === 'POST') {
       const b = await request.json();
       const post = {
-        title: String(b.title || 'Untitled'), summary: String(b.summary || ''), note: String(b.note || ''),
+        lang: b.lang === 'zh' ? 'zh' : 'en', title: String(b.title || 'Untitled'), summary: String(b.summary || ''), note: String(b.note || ''),
         body: String(b.body || ''), cover: safeImage(b.cover), cover_alt: String(b.cover_alt || ''),
         published_at: DATE_RE.test(b.published_at) ? b.published_at : todaySG(),
       };
@@ -182,6 +184,8 @@ function validatePost(b) {
   const p = {
     title: str(b.title, 150, 'Title'),
     slug: str(b.slug, 100, 'Web address').toLowerCase(),
+    lang: b.lang === 'zh' ? 'zh' : 'en',
+    translation_of: '',
     meta_title: str(b.meta_title, 70, 'SEO title'),
     summary: str(b.summary, 300, 'Summary'),
     note: str(b.note, 80, 'Handwritten note'),
@@ -191,6 +195,8 @@ function validatePost(b) {
     status: b.status === 'published' ? 'published' : 'draft',
     published_at: String(b.published_at || todaySG()),
   };
+  if (p.lang === 'zh') p.translation_of = str(b.translation_of, 100, 'English version').toLowerCase();
+  if (p.translation_of && !SLUG_RE.test(p.translation_of)) throw new UserError('English version must be a web address like used-aircon-vs-new-aircon-singapore.');
   if (!p.title) throw new UserError('Please add a title.');
   if (!SLUG_RE.test(p.slug)) throw new UserError('Web address can only use small letters, numbers and dashes, e.g. how-to-clean-aircon.');
   if (!DATE_RE.test(p.published_at)) throw new UserError('Date must look like 2026-11-12.');
@@ -207,6 +213,12 @@ function validatePhoto(b) {
   if (alt.length > 200) throw new UserError('Photo description is too long (max 200 characters).');
   if (caption.length > 60) throw new UserError('Caption is too long (max 60 characters).');
   return { section, alt, caption };
+}
+
+async function assertTranslation(env, p) {
+  if (!p.translation_of) return;
+  const row = await env.DB.prepare("SELECT id FROM posts WHERE slug = ? AND lang = 'en'").bind(p.translation_of).first();
+  if (!row) throw new UserError('No English post uses the web address "' + p.translation_of + '". Check the spelling.');
 }
 
 async function assertSlugFree(env, slug, exceptId = 0) {

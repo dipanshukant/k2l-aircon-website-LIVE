@@ -18,7 +18,13 @@
 
   var path = window.location.pathname.replace(/\.html$/, '').replace(/\/index$/, '/').replace(/\/$/, '') || '/';
   var isZh = path.indexOf('/zh') === 0;
-  var altPath = isZh ? (enPages[path] || '/') : (zhPages[path] || null);
+  var altPath = isZh ? (enPages[path] || null) : (zhPages[path] || null);
+  // Pages not in the list (e.g. blog posts) say their other-language version in <head>.
+  if (!altPath) {
+    var alt = document.querySelector('link[rel="alternate"][hreflang="' + (isZh ? 'en' : 'zh') + '"]');
+    if (alt) { try { altPath = new URL(alt.href).pathname; } catch (e) {} }
+  }
+  if (!altPath && isZh) altPath = '/';
 
   var css = document.createElement('style');
   css.textContent =

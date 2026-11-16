@@ -12,7 +12,7 @@ export async function onRequest(context) {
   }
 
   // Internal files used by the blog functions are not public pages.
-  if (/^\/(blog-template|sitemap-static)(\.html|\.xml)?$/.test(url.pathname)) {
+  if (/^(\/zh)?\/(blog-template|sitemap-static)(\.html|\.xml)?$/.test(url.pathname)) {
     return new Response('Not found', { status: 404 });
   }
 
